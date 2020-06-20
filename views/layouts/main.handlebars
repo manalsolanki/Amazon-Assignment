@@ -1,124 +1,145 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>{{title}}</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
-    <link rel='stylesheet' type='text/css' media='screen' href='/css/default.css'>
-    <link rel='stylesheet' type='text/css' media="screen" href="/css/reset.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/css/index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">   
-    
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>{{title}}</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+	<link rel='stylesheet' type='text/css' media='screen' href='/css/default.css'>
+	<link rel='stylesheet' type='text/css' media="screen" href="/css/reset.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/index.css">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
-<body>  
-{{!-- Header --}}
-        <header>
-			<nav>
-				<ul class="top-navigation-bar">
-				<li><a href="/"><img src="/img/logo1.png" alt="Amazon-logo" class ="logo" > </a></li>	
-                <li></li>
+
+<body>
+	{{!-- Header --}}
+	<header>
+		<nav>
+			<ul class="top-navigation-bar">
+				<li><a href="/"><img src="/img/logo1.png" alt="Amazon-logo" class="logo"> </a></li>
+				<li></li>
 				<div class="navigation-select ">
-					<li>
-					<select class="select-container">
-						<option>Account</option>
-						<option>Sign In</option>
-						<option>Sign Up</option>
-						<option>My Trip</option>
-						<option>View Ticket</option>
-						<option>Delete Ticket</option>
-					</select>
+
+
+					<li class="dropdown">
+						<button class="dropbtn">Login In</button>
+						<div class="dropdown-content">
+							<a href="#">Link 1</a>
+							<a href="#">Link 2</a>
+							<a href="#">Link 3</a>
+						</div>
 					</li>
-					<li>
-						<select class="select-container">
-							<option>Support</option>
-							<option>Contact Us</option>
-							<option>Talk to Us</option>
-							<option>Help</option>
-							<option>About Us</option>
-						</select>
+					<li class="dropdown">
+						<button class="dropbtn">More
+							<span class="material-icons arrow">keyboard_arrow_down</span>
+						</button>
+						<div class="dropdown-content">
+							<a href="#">Link 1</a>
+							<a href="#">Link 2</a>
+							<a href="#">Link 3</a>
+						</div>
+					</li>
+					<li class="dropdown ">
+						<a class="dropbtn" href="">
+							<span class="material-icons">
+								shopping_cart
+							</span> Cart
+						</a>
 					</li>
 				</div>
+			</ul>
+		</nav>
+	</header>
+
+	{{!-- Main Body of all the website. --}}
+	<main>
+		{{{body}}}
+	</main>
+
+
+	{{!-- Footer --}}
+	<footer>
+		<section>
+			<nav>
+				<ul class="container-footer">
+					<li class="footer-elements">
+						<ul>
+							<li>
+								<h2>Get to Know Us</h2>
+							</li>
+							<li><a href="/">About Us</a></li>
+							<li><a href="/">Careers</a></li>
+
+							<li><a href="/">Investor Relations</a></li>
+							<li><a href="/">Press Release</a></li>
+						</ul>
+					</li>
+					<li class="footer-elements">
+						<ul>
+							<li>
+								<h2>Make Money with Us</h2>
+							</li>
+							<li><a href="/">Sell on Amazon</a></li>
+							<li><a href="/">Sell Under Amazon Accelerator </a></li>
+							<li><a href="/">Amazon Associates</a></li>
+							<li><a href="/">Sale on Amazon Handmade</a></li>
+							<li><a href="/">Advertise Your Product</a></li>
+							<li><a href="/">Independtly Publish with Us</a></li>
+						</ul>
+					</li>
+
+					<li class="footer-elements">
+						<ul>
+							<li>
+								<h2>Let Us Help You</h2>
+							</li>
+							<li><a href="/">Amazon.ca Rewards Mastercard</a></li>
+							<li><a href="/">Shiping Rate and Policies</a></li>
+							<li><a href="/">Amazon Prime</a></li>
+							<li><a href="/">Returns are Easy</a></li>
+							<li><a href="/">Customer Services</a></li>
+
+						</ul>
+					</li>
+					<li class="footer-elements">
+						<ul>
+							<li>
+								<h2>Connect with Us</h2>
+							</li>
+							<li><a href="https://www.facebook.com/Amazon/">Facebook</a></li>
+							<li><a href="https://twitter.com/amazon/">Twitter</a></li>
+							<li><a href="https://www.instagram.com/amazon/?hl=en">Instagram</a></li>
+						</ul>
+					</li>
 				</ul>
 			</nav>
-		</header>
+		</section>
 
-{{!-- Main Body of all the website. --}}
-        <main>
-                 {{{body}}}
-        </main>
+		<section>
+			<nav>
+				<ul class="bottom-footer">
+					<li>
+						<p>&copy;2008-2020 Amazon.com.All rights are reserved.</p>
+					</li>
+					<li>
+						<nav>
+							<ul>
+								<li class="item-inline"><a href="#">Privacy Policy |</a> </li>
+								<li class="item-inline"><a href="#">Cookies Policy |</a></li>
+								<li class="item-inline"><a href="#">Terms and Conditions</a></li>
+							</ul>
+						</nav>
+					</li>
+				</ul>
+			</nav>
+		</section>
 
-
-{{!-- Footer --}}
-         <footer>
-			<section>
-				<nav >
-					<ul class = "container-footer">
-						<li class="footer-elements">
-							<ul>
-								<li><h2>Get to Know Us</h2></li>
-                                <li><a href ="/">About Us</a></li>	
-								<li><a href ="/">Careers</a></li>
-								
-								<li><a href ="/">Investor Relations</a></li>
-								<li><a href ="/">Press Release</a></li>						
-							</ul>
-						</li>
-						<li class="footer-elements">
-							<ul>
-								<li><h2>Make Money with Us</h2></li>
-								<li><a href ="/">Sell on Amazon</a></li>
-								<li><a href ="/">Sell Under Amazon Accelerator </a></li>	
-								<li><a href ="/">Amazon Associates</a></li>
-								<li><a href ="/">Sale on Amazon Handmade</a></li>
-                                <li><a href ="/">Advertise Your Product</a></li>												
-                                <li><a href="/">Independtly Publish with Us</a></li>
-							</ul>
-						</li>	
-						
-						<li class="footer-elements">
-							<ul>
-								<li><h2>Let Us Help You</h2></li>
-                                <li><a href ="/">Amazon.ca Rewards Mastercard</a></li>
-                                <li><a href="/">Shiping Rate and Policies</a></li>
-                                <li><a href="/">Amazon Prime</a></li>
-                                <li><a href="/">Returns are Easy</a></li>
-                                <li><a href="/">Customer Services</a></li>
-								
-							</ul>
-						</li>
-                        <li class="footer-elements">
-							<ul>
-								<li><h2>Connect with Us</h2></li>
-								<li><a href ="/">Facebook</a></li>
-                                <li><a href="/">Twitter</a></li>
-                                <li><a href="/">Instagram</a></li>				
-							</ul>
-						</li>
-					</ul>
-				</nav>
-			</section>
-       
-			<section>
-					<nav>
-						<ul class="bottom-footer">
-							<li><p>&copy;2008-2020 Amazon.com.All rights are reserved.</p></li>
-							<li>
-								<nav>
-									<ul>
-										<li class="item-inline"><a href="#">Privacy Policy |</a> </li>
-										<li class="item-inline"><a href="#">Cookies Policy |</a></li>
-										<li class="item-inline"><a href="#">Terms and Conditions</a></li>
-									</ul>
-								</nav>
-							</li>
-						</ul>
-					</nav>
-				</section>
-		
-		</footer>
-<script src='main.js'></script>       
+	</footer>
+	<script src=''></script>
 </body>
 
 </html>
