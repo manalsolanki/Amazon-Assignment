@@ -1,0 +1,19 @@
+/* This Css files include the Css for main of index.html page.*/
+.heading{
+  margin: 1em;  
+}
+.product-container{
+   display: grid;
+	grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2em;
+    margin:0em 2em;
+}
+.product-category{
+    /* padding: 1em 0em 1em 0em; */
+    /* position: relative; */
+    align-items: center;
+	background-color: grey;
+    border-radius: 5px;
+    transition: 0.3s ease;
+    
+}

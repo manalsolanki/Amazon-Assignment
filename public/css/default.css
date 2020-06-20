@@ -1,0 +1,62 @@
+/* This Css file consist of the common part like header and the footer used over all the pages. */
+body{
+    font-family:  'Montserrat',sans-serif;
+    background-color:white;
+    
+}
+
+/* Header CSS */
+.top-navigation-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding : 0.5em 2em;
+    margin: 0em;
+    
+}
+.logo{
+    width:50%;
+}
+.navigation-select{
+    display: flex;
+}
+.select-container{
+    background-color: inherit;
+    border: none;
+    margin:0.5em;
+    font-size: 1.1em;
+} 
+
+/* Footer Css */
+.container-footer{
+    background-color:#E6E6E6;
+    display: grid;
+    grid-template-columns:25% 25% 25% 25%; 
+    /*padding: 1em; */
+    align-items: flex-start;
+    margin-bottom: 0em;
+    padding: 0em 2em;
+}
+.footer-logo{
+    align-items: center;
+    padding: 1em;
+    margin: 1em;
+}
+.footer-elements{
+    margin: 1em;
+}
+footer a{
+    text-decoration: none;
+    color:#333333;
+    font-family:'Roboto', sans-serif;
+}
+.bottom-footer{
+    display: flex;
+    padding:0em 2em;
+    background-color: #CFD2D5;
+    justify-content: space-between;
+    margin:0em;
+}
+.item-inline{
+    display: inline;  
+}

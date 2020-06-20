@@ -1,0 +1,17 @@
+<section>
+    <img src="/img/banner1.jpg" alt="Banner Image">
+    <h2 class="heading">Best Seller</h2>
+    <section class="product-container">
+     
+        {{#each products}}
+        <article class="product-category">
+        <h2>{{this.name}}</h2>
+        <a href="/" >
+            <img src="/img/{{this.image}}" alt = "Product Category ">
+        </a>
+        <a href="">See More</a>
+        </article>
+        {{/each}}
+       
+    </section>
+</section>
