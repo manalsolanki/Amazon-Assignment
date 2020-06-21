@@ -10,6 +10,7 @@
 	<link rel='stylesheet' type='text/css' media='screen' href='/css/default.css'>
 	<link rel='stylesheet' type='text/css' media="screen" href="/css/reset.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/css/index.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/css/login.css">
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -20,17 +21,23 @@
 	<header>
 		<nav>
 			<ul class="top-navigation-bar">
-				<li><a href="/"><img src="/img/logo1.png" alt="Amazon-logo" class="logo"> </a></li>
-				<li></li>
+				<div class="navigation-select">
+					<a href="/"><img src="/img/logo1.png" alt="Amazon-logo" class="logo"> </a>
+
+					<li><input type="text" placeholder="Search " class="top-search"></li>
+				</div>
+
 				<div class="navigation-select ">
 
 
 					<li class="dropdown">
-						<button class="dropbtn">Login In</button>
+						<button class="dropbtn">Login</button>
 						<div class="dropdown-content">
-							<a href="#">Link 1</a>
-							<a href="#">Link 2</a>
-							<a href="#">Link 3</a>
+							<a href="/login">Log In</a>
+							<a href="/sign-up">Sign Up</a>
+							<a href="/">My Profile</a>
+							<a href="/">Wishlist</a>
+							<a href="/">Rewards </a>
 						</div>
 					</li>
 					<li class="dropdown">
@@ -38,9 +45,9 @@
 							<span class="material-icons arrow">keyboard_arrow_down</span>
 						</button>
 						<div class="dropdown-content">
-							<a href="#">Link 1</a>
-							<a href="#">Link 2</a>
-							<a href="#">Link 3</a>
+							<a href="/">Sell on Amazon</a>
+							<a href="/">24*7 Customer Care</a>
+							<a href="/">Advertise</a>
 						</div>
 					</li>
 					<li class="dropdown ">
@@ -128,9 +135,9 @@
 					<li>
 						<nav>
 							<ul>
-								<li class="item-inline"><a href="#">Privacy Policy |</a> </li>
-								<li class="item-inline"><a href="#">Cookies Policy |</a></li>
-								<li class="item-inline"><a href="#">Terms and Conditions</a></li>
+								<li class="item-inline"><a href="/">Privacy Policy |</a> </li>
+								<li class="item-inline"><a href="/">Cookies Policy |</a></li>
+								<li class="item-inline"><a href="/">Terms and Conditions</a></li>
 							</ul>
 						</nav>
 					</li>
@@ -139,7 +146,7 @@
 		</section>
 
 	</footer>
-	<script src=''></script>
+	<script src='/js/main.js'></script>
 </body>
 
 </html>

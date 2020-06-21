@@ -1,23 +1,39 @@
+{{!-- Banner Promotional Section --}}
 <section>
-    <div class="banner-image">
-        <img  src="/img/main-banner.jpg" alt="Banner Image">
-            <h2 class="banner-heading">helo</h2>
-    </div>
-    <h2 class="heading">Best Seller</h2>
-    
+    <article class="banner-image">
+        <img   id ="slide"  src="/img/main-banner.jpg" alt="Banner Image">
+        <div class="banner-heading">
+            <h2>Lorem Ipsum</h2>
+            <h3>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum magni quos at veritatis maxime, tempora
+                repellendus facilis corrupti quisquam, ullam, veniam aliquid quis dolor? Rem rerum est pariatur laborum
+                quisquam?</h3>
+        </div>
+    </article>
 
+{{!-- Product Category --}}
+    <h2 class="heading">Categories</h2>
     <section class="product-container">
-
         {{#each products}}
         <article class="product-category">
-           
-           
+            <a href="/product">
                 <img src="/img/{{this.image}}" alt="Product Category ">
-                <h2 class = "product-heading">{{this.name}}</h2>
-        
-             
+                <h2 class="product-heading"><b>{{this.name}}</b></h2>
+            </a>
         </article>
         {{/each}}
-
     </section>
+
+
+{{!-- Best Seller Section --}}
+    <section>
+        <h2 class="heading">Best Sellers</h2>
+        <div class="bestseller-card">
+            {{#each bestsellers }}
+            <div class="detailed-card">
+                <img src="/img/{{this.img}}" />
+            </div>
+            {{/each}}
+    </section>
+
+    
 </section>

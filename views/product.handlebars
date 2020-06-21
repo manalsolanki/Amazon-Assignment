@@ -1,0 +1,20 @@
+<section>
+    <h2 class="heading">Electronics</h2>
+    <div class = "product-card">
+        {{#each products }}
+            <div class="detailed-card">
+            <img src ="/img/{{this.img}}"/>
+            <h4>{{this.name}}</h4>
+            <div class="bottom-card">
+                <p class="price"> CAD {{this.price}}</p>
+                <button class="button-cart">
+                     <span class="material-icons">
+								shopping_cart
+					</span>
+                </button>
+            </div>
+            </div>
+        {{/each}}
+
+    </div>
+</section>

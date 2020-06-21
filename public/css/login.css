@@ -1,0 +1,54 @@
+.login-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:2em 0em;
+    
+}
+
+
+.login-page{
+    padding: 1em;
+    border-radius: 5px;
+    border:1px solid black;
+    width: 25em;
+}
+
+
+.line{
+    border: 1px solid black;
+    width: 100%;
+}
+
+
+.form-element{
+    margin: 1em 0em;
+}
+
+
+input{
+    margin: 0.5em 0em;
+}
+
+
+.login-form a{
+    text-decoration-line: underline;
+}
+
+
+.bottom-section{
+    padding: 1em 0em;
+    text-align: center;
+}
+
+
+.submit-button{
+    background-color:#4CAF50;
+    color: white;
+}
+
+
+.heading-centre{
+    text-align: center;
+    font-weight: bolder;
+}

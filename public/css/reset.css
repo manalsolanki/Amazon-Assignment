@@ -53,8 +53,14 @@ input, textarea, button {
 	vertical-align: middle;
 	font-size: inherit;
 	font-family: inherit;
-
+	padding: 10px 15px;
+    border: none;
+    background: whitesmoke;
+    border-radius: 5px;
+    width: 100%;
 }
+
+
 
 [type="checkbox"], [type="radio"] {
 	vertical-align: middle;

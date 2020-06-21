@@ -11,16 +11,30 @@
 .product-category{
     /* padding: 1em 0em 1em 0em; */
     /* position: relative; */
-    align-items: center;
+    
 	background-color: grey;
     border-radius: 5px;
-    position: relative;
-    transition: 0.3s ease;
-    
+    position: relative;   
+}
+.product-category img{
+    height: 100%;
+    max-height: 250px;
+    width: 100%;
+   
 }
 .product-heading{
     position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bolder;
+    border: 1px solid none;
+    padding: 0.4em;
+    background-color:rgba(80,122,164,0.5)
 }
+    
+
 .banner-image img{
     height: 80vh;
     width: 100%;
@@ -33,12 +47,71 @@
 .banner-heading{
     position: absolute;
     top: 50%;
-    right: 15%;
-    transform: translate(-50%, -50%);
+    width: 450px;
+    right: 5%;
+    transform: translate(0, -50%);
     border-radius: 5px;
     /* border: 1px red; */
     background: rgba(254,254,255,0.75);
-    padding: 0.5em;
+    padding: 0.5em 1.5em;
     box-shadow: 0px 0px 15px -1px rgba(0,0,0,0.75);
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* !!!!!!!!! Css of product page !!!!!!!!! */
+.product-card{
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     grid-gap: 1em;
+     margin: 2em 4em;
+    
+}
+
+.bestseller-card{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap:1em;
+    margin: 2em 2em;
+}
+
+.detailed-card{
+   text-align: center;
+   transition: all 1s;
+}
+
+.product-card img{
+    height: 300px;
+}
+.detailed-card:hover{
+    box-shadow: 0px 0px 14px 3px rgba(181,177,177,1);
+    border-radius: 5px;
+}
+
+.bottom-card{
+    display: flex;
+    justify-content: space-between;
+    margin: 0em 1em;
+}
+
+.price{
+    color: rgb(243,147,61);
+}
+
+.button-cart{
+    width: auto;
+    text-align: right;
+    background-color: white;
+}
+
+
