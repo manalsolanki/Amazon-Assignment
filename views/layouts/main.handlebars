@@ -18,20 +18,20 @@
 
 <body>
 	{{!-- Header --}}
+	<div class="page">
 	<header>
-		<nav>
+		<nav class="nav-container">
 			<ul class="top-navigation-bar">
 				<div class="navigation-select">
 					<a href="/"><img src="/img/logo1.png" alt="Amazon-logo" class="logo"> </a>
-
-					<li><input type="text" placeholder="Search " class="top-search"></li>
+					<li><input type="text" placeholder="Search " class="top-search hide-content"></li>
 				</div>
 
 				<div class="navigation-select ">
 
 
 					<li class="dropdown">
-						<button class="dropbtn">Login</button>
+						<button class="dropbtn hide-content">Login</button>
 						<div class="dropdown-content">
 							<a href="/login">Log In</a>
 							<a href="/sign-up">Sign Up</a>
@@ -41,7 +41,7 @@
 						</div>
 					</li>
 					<li class="dropdown">
-						<button class="dropbtn">More
+						<button class="dropbtn hide-content">More
 							<span class="material-icons arrow">keyboard_arrow_down</span>
 						</button>
 						<div class="dropdown-content">
@@ -54,14 +54,27 @@
 						<a class="dropbtn" href="">
 							<span class="material-icons">
 								shopping_cart
-							</span> Cart
+							</span> <span class="hide-content"> Cart </span></span>
 						</a>
+					</li>
+					<li class="dropdown show-content" id="menu">
+						<div class="dropbtn" href="">
+							<span class="material-icons">
+								menu
+							</span>
+						</div>
 					</li>
 				</div>
 			</ul>
+			<ul class="show-content">
+				<div class="bottom-search">
+				<li><input type="text" placeholder="Search Here " class="top-search "></li>
+				</div>
+			</ul>	
 		</nav>
 	</header>
-
+	<div class="side-menu" id= "sideMenu"></div>
+	
 	{{!-- Main Body of all the website. --}}
 	<main>
 		{{{body}}}
@@ -147,6 +160,7 @@
 
 	</footer>
 	<script src='/js/main.js'></script>
+	</div>
 </body>
 
 </html>

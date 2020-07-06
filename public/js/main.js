@@ -21,3 +21,14 @@ function SlideImg(){
 
 // Run function when page loads
 window.onload=SlideImg;  
+
+
+
+// Show Side menu 
+
+let menu = document.getElementById('menu');
+let sideMenu = document.getElementById('sideMenu');
+
+menu.onclick = ()=>{
+  sideMenu.classList.toggle("show-side-menu")
+}
