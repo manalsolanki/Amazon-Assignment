@@ -1,10 +1,10 @@
 const express = require("express");
 const exphbs  = require('express-handlebars');
 const app = express();
-const PORT = process.env.PORT || 3000
+const bodyParser = require('body-parser')
 
-const CategoryDB = require("./models/product-category");
-const ProductDB = require("./models/product-list");
+// Environment Varibale
+require('dotenv').config({path:"./config/keys.env"})
 
 
 
@@ -13,60 +13,26 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 
+// Parse Application
+app.use(bodyParser.urlencoded({ extended: false }))
+
+
 // Static files intialisation
 app.use(express.static("public"));
 
 
-// Object of Category List
-const fakeCategoryDB = new CategoryDB();
-// object of Product list
-const fakeProductDB = new ProductDB();
+
+// Load Each controller
+const generalContoller = require("./controllers/general")
+
+// map each controller to the app object 
+app.use("/",generalContoller)
 
 
-
-// This calls the home page.
-app.get("/",(req,res)=>{
-    res.render("index",{
-        title : "Home",
-        products : fakeCategoryDB.getProduct(),
-        bestsellers : fakeProductDB.getfeaturedproduct()
-    })
-})
-
-
-
-// This calls the Product List page.
-
-app.get("/product",(req,res)=>{
-    res.render("product",{
-        title : "Product",
-        products : fakeProductDB.getproductdetails()
-    })
-})
-
-
-
-// This calls the login Page
-
-app.get("/login",(req,res)=>{
-    res.render("login",{
-        title:"Login"
-    })
-
-})
-
-
-
-// This calls the Sign Up
-app.get("/sign-up",(req,res)=>{
-    res.render("sign-up",{
-        title:"Sign-Up"
-    })
-
-})
 
 
 // Web Server 
+const PORT = process.env.PORT 
 app.listen(PORT , ()=>{
     console.log("Server is running.");
 })

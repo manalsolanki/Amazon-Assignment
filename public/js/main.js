@@ -1,10 +1,9 @@
 var i = 0; 			
-var images = [];	
+var images = ["/img/main-banner.jpg", "/img/banner-image1.jpg"];	
 // Time Between Switch
 var time = 5000;	
 // Image List
-images[0] = "/img/main-banner.jpg";
-images[1] = "/img/banner-image1.jpg";
+
 
 // Change Image
 function SlideImg(){

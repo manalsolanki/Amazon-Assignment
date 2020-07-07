@@ -1,33 +1,57 @@
-<form class="login-form">
+<section class="login-form">
     <div class="login-page">
         <h1 class="heading-centre">Sign In</h1>
         <div class="line"></div>
-        <div class="form-element">
-            <label for="email">
-                Email
-            </label>
-            <div>
-                <input type="text" placeholder="Email address" id="email">
-            </div>
-        </div>
-         <div class="form-element">
-            <label for="password">
-                Password
-            </label>
-            <div>
-                <input type="password" placeholder="Password" id= "password">
-            </div>
-        </div>
-        <div class="form-element">
+       
             
-            <div>
-                <button class="submit-button" type="Submit" >Submit</button>
+        <form  method="POST" action="/login">
+          
+            <div class="form-element">
+                <label for="email">
+                    Email
+                </label>
+                <div >
+                    <input type="text" name ="email" placeholder="Email address" id="email" value="{{value.email}}"
+                     {{#if errormessage.email }}
+                        class="input-error"
+                    {{/if}}
+                    >
+                </div>
+                <div class="error-message">
+                    {{errormessage.email}}
+                </div> 
+                        
+               
             </div>
-        </div>
-        
+            <div class="form-element">
+                <label for="password">
+                    Password
+                </label>
+                <div>
+                    <input type="password" name="password" placeholder="Password" id= "password" value="{{value.password}}"
+                    {{#if errormessage.password}}
+                        class="input-error"
+                    {{/if}}
+                    >
+                </div>
+                <div class="error-message">   
+                        {{errormessage.password}}
+                </div>
+            </div>
+            <div class="form-element">
+                
+                <div>
+                    <input class="submit-button"  type="Submit" value="Submit" >
+                </div>
+            </div>
+           
+        </form>  
+
+          
         <div class = "bottom-section">
             <h4>New to Amazon ? </h4>
              <a href="/sign-up">Create Your Account</a>
         </div>
     </div>
-</form>
+
+</section>

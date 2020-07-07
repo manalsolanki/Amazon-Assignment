@@ -1,59 +1,73 @@
-<form class="login-form">
+<section class="login-form">
     <div class="login-page">
         <h1 class="heading-centre">Sign Up</h1>
         <div class="line"></div>
 
-
-        <div class="form-element">
-            <label for="name">
-                Your Name
-            </label>
-            <div>
-                <input type="text" placeholder="Enter your Name" id="name">
+        <form method="POST" action="/sign-up">
+            <div class="form-element">
+                <label for="firstName">
+                    Your First Name
+                </label>
+                <div>
+                    <input type="text" name="firstName" id="firstName" placeholder="Enter your First Name">
+                </div>
             </div>
-        </div>
 
 
-        <div class="form-element">
-            <label for="email">
-                Email
-            </label>
-            <div>
-                <input type="text" placeholder="Enter your Email" id="email">
+
+            <div class="form-element">
+                <label for="lastName">
+                    Your Last Name
+                </label>
+                <div>
+                    <input type="text" name="lastName" id="lastName" placeholder="Enter your Last  Name">
+                </div>
             </div>
-        </div>
 
 
-         <div class="form-element">
-            <label for="password">
-                Password
-            </label>
-            <div>
-                <input type="password" placeholder=" Enter Password" id= "password">
+
+
+            <div class="form-element">
+                <label for="email">
+                    Email
+                </label>
+                <div>
+                    <input type="text" name="email" id="email" placeholder="Enter your Email">
+                </div>
             </div>
-        </div>
 
 
-         <div class="form-element">
-            <label for="password">
-                Repeat Password
-            </label>
-            <div>
-                <input type="password" placeholder=" Reenter  your Password" id= "password">
+            <div class="form-element">
+                <label for="password">
+                    Password
+                </label>
+                <div>
+                    <input type="password" name="password" id="password" placeholder=" Enter Password">
+                </div>
             </div>
-        </div>
 
 
-        <div class="form-element">
-            
-            <div>
-                <button class="submit-button" type="Submit" >Register</button>
+            <div class="form-element">
+                <label for="password">
+                    Repeat Password
+                </label>
+                <div>
+                    <input type="password" name="repassword" id="repassword" placeholder=" Reenter  your Password">
+                </div>
             </div>
-        </div>
-        
-        <div class = "bottom-section">
+
+
+            <div class="form-element">
+
+                <div>
+                    <input class="submit-button" type="Submit" value="Submit">
+                </div>
+            </div>
+        </form>
+        <div class="bottom-section">
             <h4>Already Have Account </h4>
-             <a href="/login">Sign In</a>
+            <a href="/login">Sign In</a>
         </div>
     </div>
-</form>
+
+</section>

@@ -25,6 +25,13 @@
     margin: 1em 0em;
 }
 
+.input-error{
+    border: 1px solid red;
+}
+.error-message{
+    color: red;
+}
+
 
 input{
     margin: 0.5em 0em;
