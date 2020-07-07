@@ -122,7 +122,7 @@ body{
     background-color:#507aa4;
     display: grid;
     color: #f1f3f6;
-    grid-template-columns:25% 25% 25% 25%; 
+    grid-template-columns:repeat(4,1fr) ;
     /*padding: 1em; */
     align-items: flex-start;
     margin-bottom: 0em;
@@ -168,11 +168,22 @@ footer a{
   .show-content{
     display: block;
   }
-
   .dropdown{
     margin: 0em;
   }
   .top-search{
     margin: 0em 1em 1em 0em;
+  }
+
+
+
+
+.container-footer{
+  grid-template-columns: repeat(2,1fr);
+}
+  .bottom-footer{
+    display:block;
+    padding: 1em 2em;
+    text-align: center;
   }
 }

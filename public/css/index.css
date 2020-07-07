@@ -115,3 +115,26 @@
 }
 
 
+/* Media Query for Ipad Version */
+@media(max-width : 768px){
+    
+    /* For The Home Page */
+
+    .banner-image img{
+        height: 60vh;
+    }
+    .banner-heading{
+        width:375px;
+    }
+    .product-container{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .bestseller-card{
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    /* For the Product Page */
+    .product-card{
+        grid-template-columns: repeat(1 ,1fr);
+    }
+}
