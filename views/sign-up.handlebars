@@ -9,7 +9,14 @@
                     Your First Name
                 </label>
                 <div>
-                    <input type="text" name="firstName" id="firstName" placeholder="Enter your First Name">
+                    <input type="text" name="firstName" id="firstName" placeholder="Enter your First Name" value="{{this.firstName}}"
+                    {{#if errormessage.email }}
+                        class="input-error"
+                    {{/if}}
+                    >
+                </div>
+                <div class="error-message">
+                    {{errormessage.firstName}}
                 </div>
             </div>
 
@@ -20,8 +27,16 @@
                     Your Last Name
                 </label>
                 <div>
-                    <input type="text" name="lastName" id="lastName" placeholder="Enter your Last  Name">
+                    <input type="text" name="lastName" id="lastName" placeholder="Enter your Last  Name"
+                    {{#if errormessage.email }}
+                        class="input-error"
+                    {{/if}}
+                    >
                 </div>
+                <div class="error-message">
+                    {{errormessage.lastName}}
+                </div>
+                
             </div>
 
 
@@ -32,7 +47,14 @@
                     Email
                 </label>
                 <div>
-                    <input type="text" name="email" id="email" placeholder="Enter your Email">
+                    <input type="text" name="email" id="email" placeholder="Enter your Email"
+                    {{#if errormessage.email }}
+                        class="input-error"
+                    {{/if}}
+                    >
+                </div>
+                <div class="error-message">
+                    {{errormessage.email}}
                 </div>
             </div>
 
@@ -42,7 +64,14 @@
                     Password
                 </label>
                 <div>
-                    <input type="password" name="password" id="password" placeholder=" Enter Password">
+                    <input type="password" name="password" id="password" placeholder=" Enter Password"
+                    {{#if errormessage.email }}
+                        class="input-error"
+                    {{/if}}
+                    >
+                </div>
+                <div class="error-message">
+                    {{errormessage.password}}
                 </div>
             </div>
 
@@ -52,13 +81,19 @@
                     Repeat Password
                 </label>
                 <div>
-                    <input type="password" name="repassword" id="repassword" placeholder=" Reenter  your Password">
+                    <input type="password" name="repassword" id="repassword" placeholder=" Reenter  your Password"
+                    {{#if errormessage.email }}
+                        class="input-error"
+                    {{/if}}
+                    >
+                </div>
+                <div class="error-message">
+                    {{errormessage.repassword}}
                 </div>
             </div>
 
 
             <div class="form-element">
-
                 <div>
                     <input class="submit-button" type="Submit" value="Submit">
                 </div>

@@ -34,6 +34,8 @@ router.get("/product",(req,res)=>{
     })
 })
 
+
+
 // This calls the login Page
 
 router.get("/login",(req,res)=>{
@@ -51,11 +53,11 @@ router.post("/login" ,(req,res)=>{
     // ... rest 
     if(!(email))
     {
-        errors.email = "Please enter a Email Address."
+        errors.email = "! Please enter a Email Address."
     }
     if(!(password))
     {
-        errors.password = "Please enter a Password."
+        errors.password = "! Please enter a Password."
     }
     
     if(Object.keys(errors).length > 0 )
@@ -90,9 +92,48 @@ router.get("/sign-up",(req,res)=>{
 router.post("/sign-up" ,(req,res)=>{
 
     const {firstName,lastName,email,password,repassword} = req.body
+    const errors = { }
+    const values = { ...req.body}
 
-    console.log(req.body)
+    if(!(firstName))
+    {
+        errors.firstName = "! Please Enter your first name."
+    }
+
+    if(!(lastName))
+    {
+        errors.lastName = "! Please Enter your last name."
+    }
   
+    if(!(email))
+    {
+        errors.email = "! Please Enter your email."
+    }
+
+    if(!(password))
+    {
+        errors.password = "! Please Enter your password."
+    }
+
+    if(!(repassword))
+    {
+        errors.repassword = "! Please Enter your password again."
+    }
+
+    if(Object.keys(errors).length > 0 )
+    {
+        res.render("sign-up" , {
+            title: "Sign-Up",
+            errormessage :errors,
+            value : values
+        });
+    }
+    else{
+        res.redirect("/");
+    }
+
+    
+
     // using Twilio SendGrid's v3 Node.js Library
     // https://github.com/sendgrid/sendgrid-nodejs
     const sgMail = require('@sendgrid/mail');
