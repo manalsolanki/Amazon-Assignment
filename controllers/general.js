@@ -47,6 +47,7 @@ router.get("/login",(req,res)=>{
 
 router.post("/login" ,(req,res)=>{
     const {email,password} = req.body
+    // error as object 
     const errors = { }
     const value ={...req.body} 
     // ... spread operator : whatever is there in req.body it will take.It is use to copy value from onr object to another.
@@ -75,7 +76,14 @@ router.post("/login" ,(req,res)=>{
     
 })
 
+// This calls the Dashboard 
+router.get("/dashboard",(req,res)=>{
 
+    res.render("dashboard", {
+        title : "Welcome Page",
+        
+    })
+})
 
 
 
@@ -109,17 +117,46 @@ router.post("/sign-up" ,(req,res)=>{
     {
         errors.email = "! Please Enter your email."
     }
+    else
+    {
+        // Validation of email it should have @ and .
+        const validateEmail = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+        if(!(email.match(validateEmail)))
+        {
+            errors.email = "! Please enter a proper email address."
+        }
+    }
 
     if(!(password))
     {
         errors.password = "! Please Enter your password."
+    }
+    else
+    {
+        // validation for Password : length should be 7-16 , should have one special character , one digit and alphabets
+        const validatePassword = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[@#%\*\-+=~\[\]{}<>\?].*).{7,16}$/
+        if(!(password.match(validatePassword)))
+        {
+            errors.password ="!Please enter password with proper thing."
+        }
     }
 
     if(!(repassword))
     {
         errors.repassword = "! Please Enter your password again."
     }
+    else
+    {   
+        // checks if both password entered are same. 
+        if( !(password == repassword))
+        {
+            errors.samepassword ="! Please Enter the same Password"
 
+        }
+    }
+
+
+    // Checking for the errors if there are then it will send otherwise it will redirect to the dashboard page.
     if(Object.keys(errors).length > 0 )
     {
         res.render("sign-up" , {
@@ -129,31 +166,36 @@ router.post("/sign-up" ,(req,res)=>{
         });
     }
     else{
-        res.redirect("/");
+        res.redirect("/dashboard")  
     }
 
-    
 
-    // using Twilio SendGrid's v3 Node.js Library
-    // https://github.com/sendgrid/sendgrid-nodejs
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-    const msg = {
-    to: `${email}`,
-    from: '97manal@gmail.com',
-    subject: 'Sign Up on Amazon',
-    //   text: 'and easy to do anywhere, even with Node.js',
-    html: `Hello ${firstName} ${lastName} Welcome to Amazon 
-          <a src="/">Click here</a> `,
-    };
-    sgMail.send(msg)
-    . then(()=>{
-        res.redirect("/");
-    })
-    . catch(err=>{
-        console.log(`Error ${err}`);
-    });
+
+    // Sending email if all the fields are not null and validated.
     
+    if(Object.keys(errors).length == 0)
+    {
+        // using Twilio SendGrid's v3 Node.js Library
+        // https://github.com/sendgrid/sendgrid-nodejs
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+        const msg = {
+        to: `${email}`,
+        from: '97manal@gmail.com',
+        subject: 'Welcome to Amazon',
+        //   text: 'and easy to do anywhere, even with Node.js',
+        html: `<p style ="font-size : 25px"> Hello ${firstName} ${lastName} </p>
+                <p style ="color : red "> Welcome to Amazon </p> 
+            <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
+        };
+        sgMail.send(msg)
+        . then(()=>{
+            res.redirect("/");
+        })
+        . catch(err=>{
+            console.log(`Error ${err}`);
+        });
+    }
     
 })
 

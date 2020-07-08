@@ -99,18 +99,26 @@ body{
 
 /* side bar Css */
 .side-menu{
-  height: 100vh;
+  height: auto;
   position: absolute;
   z-index: 1;
-  width:300px;
-  background-color: ivory;
-  right: -300px;
+  width:250px;
+  background-color:rgba(80,122,164,0.9);
+  right: -250px;
   transition: all ease 0.3s;
 }
 
 .show-side-menu{
   right:  0;
 }
+.side-menu-list{
+  padding: 1em;
+  font-weight: bolder;
+  color: white;
+
+  
+}
+
 
 
 
@@ -184,6 +192,13 @@ footer a{
   .bottom-footer{
     display:block;
     padding: 1em 2em;
+    text-align: center;
+  }
+}
+
+@media(max-width :576px){
+  .container-footer{
+    grid-template-columns: repeat(1,1fr);
     text-align: center;
   }
 }

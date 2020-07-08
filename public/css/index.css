@@ -31,7 +31,7 @@
     font-weight: bolder;
     border: 1px solid none;
     padding: 0.4em;
-    background-color:rgba(80,122,164,0.5)
+    background-color:rgba(80,122,164,0.5);
 }
     
 
@@ -136,5 +136,14 @@
     /* For the Product Page */
     .product-card{
         grid-template-columns: repeat(1 ,1fr);
+    }
+}
+
+@media(max-width : 567px){
+    .product-container{
+        grid-template-columns: repeat(1,1fr);
+    }
+    .bestseller-card{
+        grid-template-columns: repeat(1,1fr);
     }
 }

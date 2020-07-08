@@ -9,8 +9,8 @@
                     Your First Name
                 </label>
                 <div>
-                    <input type="text" name="firstName" id="firstName" placeholder="Enter your First Name" value="{{this.firstName}}"
-                    {{#if errormessage.email }}
+                    <input type="text" name="firstName" id="firstName" placeholder="Enter your First Name" value="{{value.firstName}}"
+                    {{#if errormessage.firstName }}
                         class="input-error"
                     {{/if}}
                     >
@@ -27,8 +27,8 @@
                     Your Last Name
                 </label>
                 <div>
-                    <input type="text" name="lastName" id="lastName" placeholder="Enter your Last  Name"
-                    {{#if errormessage.email }}
+                    <input type="text" name="lastName" id="lastName" placeholder="Enter your Last Name" value="{{value.lastName}}"
+                    {{#if errormessage.lastName }}
                         class="input-error"
                     {{/if}}
                     >
@@ -47,7 +47,7 @@
                     Email
                 </label>
                 <div>
-                    <input type="text" name="email" id="email" placeholder="Enter your Email"
+                    <input type="text" name="email" id="email" placeholder="Enter your Email" value="{{value.email}}"
                     {{#if errormessage.email }}
                         class="input-error"
                     {{/if}}
@@ -64,14 +64,14 @@
                     Password
                 </label>
                 <div>
-                    <input type="password" name="password" id="password" placeholder=" Enter Password"
-                    {{#if errormessage.email }}
+                    <input type="password" name="password" id="password" placeholder=" Enter Password" value="{{value.password}}"
+                    {{#if errormessage.password }}
                         class="input-error"
                     {{/if}}
                     >
                 </div>
                 <div class="error-message">
-                    {{errormessage.password}}
+                     {{errormessage.password}}
                 </div>
             </div>
 
@@ -81,8 +81,8 @@
                     Repeat Password
                 </label>
                 <div>
-                    <input type="password" name="repassword" id="repassword" placeholder=" Reenter  your Password"
-                    {{#if errormessage.email }}
+                    <input type="password" name="repassword" id="repassword" placeholder=" Reenter  your Password" value="{{value.repassword}}"
+                    {{#if errormessage.repassword }}
                         class="input-error"
                     {{/if}}
                     >
@@ -90,6 +90,7 @@
                 <div class="error-message">
                     {{errormessage.repassword}}
                 </div>
+                
             </div>
 
 
