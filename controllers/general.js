@@ -165,9 +165,7 @@ router.post("/sign-up" ,(req,res)=>{
             value : values
         });
     }
-    else{
-        res.redirect("/dashboard")  
-    }
+    
 
 
 
@@ -190,7 +188,7 @@ router.post("/sign-up" ,(req,res)=>{
         };
         sgMail.send(msg)
         . then(()=>{
-            res.redirect("/");
+            res.redirect("/dashboard");
         })
         . catch(err=>{
             console.log(`Error ${err}`);
