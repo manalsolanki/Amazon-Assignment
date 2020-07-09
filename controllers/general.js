@@ -137,7 +137,7 @@ router.post("/sign-up" ,(req,res)=>{
         const validatePassword = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[@#%\*\-+=~\[\]{}<>\?].*).{7,16}$/
         if(!(password.match(validatePassword)))
         {
-            errors.password ="!Please enter password with proper thing."
+            errors.password ="!Please enter a password of length 7-16 ,should consist of digit,alphabet and special character."
         }
     }
 

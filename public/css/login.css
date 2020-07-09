@@ -60,3 +60,23 @@ input{
     text-align: center;
     font-weight: bolder;
 }
+
+
+
+/* dashboard */
+.login-form img{
+    position: relative;
+    width: 60em;
+    height:40em;
+}
+.welcome{
+    position: absolute;
+    border: 2px solid black;
+    text-align: center;
+    padding: 1em;
+    background-color: snow;
+    
+}
+.welcome h1{
+   
+}
