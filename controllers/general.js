@@ -1,9 +1,6 @@
 const express = require('express')
 const router = express.Router()
 
-
-
-
 const CategoryDB = require("../models/product-category");
 const ProductDB = require("../models/product-list");
 
@@ -11,10 +8,6 @@ const ProductDB = require("../models/product-list");
 const fakeCategoryDB = new CategoryDB();
 // object of Product list
 const fakeProductDB = new ProductDB();
-
-
-
-
 
 // This calls the home page.
 router.get("/",(req,res)=>{
@@ -34,168 +27,13 @@ router.get("/product",(req,res)=>{
     })
 })
 
-
-
-// This calls the login Page
-
-router.get("/login",(req,res)=>{
-    res.render("login",{
-        title:"Login"
-    })
-
-})
-
-router.post("/login" ,(req,res)=>{
-    const {email,password} = req.body
-    // error as object 
-    const errors = { }
-    const value ={...req.body} 
-    // ... spread operator : whatever is there in req.body it will take.It is use to copy value from onr object to another.
-    // ... rest 
-    if(!(email))
-    {
-        errors.email = "! Please enter a Email Address."
-    }
-    if(!(password))
-    {
-        errors.password = "! Please enter a Password."
-    }
-    
-    if(Object.keys(errors).length > 0 )
-    {
-        res.render("login" , {
-            title: "Login",
-            errormessage :errors,
-            value : value
-        });
-    }
-    else{
-        res.redirect("/");
-    }
-
-    
-})
-
 // This calls the Dashboard 
-router.get("/dashboard",(req,res)=>{
-
+const renderDashboard = (req,res)=>{
     res.render("dashboard", {
-        title : "Welcome Page",
-        
+        title : "Welcome Page",  
     })
-})
+}
 
 
-
-
-// This calls the Sign Up
-router.get("/sign-up",(req,res)=>{
-    
-    res.render("sign-up",{
-        title:"Sign-Up"
-    })
-
-})
-
-router.post("/sign-up" ,(req,res)=>{
-
-    const {firstName,lastName,email,password,repassword} = req.body
-    const errors = { }
-    const values = { ...req.body}
-
-    if(!(firstName))
-    {
-        errors.firstName = "! Please Enter your first name."
-    }
-
-    if(!(lastName))
-    {
-        errors.lastName = "! Please Enter your last name."
-    }
-  
-    if(!(email))
-    {
-        errors.email = "! Please Enter your email."
-    }
-    else
-    {
-        // Validation of email it should have @ and .
-        const validateEmail = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
-        if(!(email.match(validateEmail)))
-        {
-            errors.email = "! Please enter a proper email address."
-        }
-    }
-
-    if(!(password))
-    {
-        errors.password = "! Please Enter your password."
-    }
-    else
-    {
-        // validation for Password : length should be 7-16 , should have one special character , one digit and alphabets
-        const validatePassword = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[@#%\*\-+=~\[\]{}<>\?].*).{7,16}$/
-        if(!(password.match(validatePassword)))
-        {
-            errors.password ="!Please enter a password of length 7-16 ,should consist of digit,alphabet and special character."
-        }
-    }
-
-    if(!(repassword))
-    {
-        errors.repassword = "! Please Enter your password again."
-    }
-    else
-    {   
-        // checks if both password entered are same. 
-        if( !(password == repassword))
-        {
-            errors.samepassword ="! Please Enter the same Password"
-
-        }
-    }
-
-
-    // Checking for the errors if there are then it will send otherwise it will redirect to the dashboard page.
-    if(Object.keys(errors).length > 0 )
-    {
-        res.render("sign-up" , {
-            title: "Sign-Up",
-            errormessage :errors,
-            value : values
-        });
-    }
-    
-
-
-
-    // Sending email if all the fields are not null and validated.
-    
-    if(Object.keys(errors).length == 0)
-    {
-        // using Twilio SendGrid's v3 Node.js Library
-        // https://github.com/sendgrid/sendgrid-nodejs
-        const sgMail = require('@sendgrid/mail');
-        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-        const msg = {
-        to: `${email}`,
-        from: '97manal@gmail.com',
-        subject: 'Welcome to Amazon',
-        //   text: 'and easy to do anywhere, even with Node.js',
-        html: `<p style ="font-size : 25px"> Hello ${firstName} ${lastName} </p>
-                <p style ="color : red "> Welcome to Amazon </p> 
-            <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
-        };
-        sgMail.send(msg)
-        . then(()=>{
-            res.redirect("/dashboard");
-        })
-        . catch(err=>{
-            console.log(`Error ${err}`);
-        });
-    }
-    
-})
-
-
+router.get('/dashboard',renderDashboard)
 module.exports=router

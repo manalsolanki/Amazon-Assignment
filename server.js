@@ -24,10 +24,11 @@ app.use(express.static("public"));
 
 // Load Each controller
 const generalContoller = require("./controllers/general")
+const userController = require("./controllers/user")
 
 // map each controller to the app object 
 app.use("/",generalContoller)
-
+app.use("/user",userController)
 
 
 
