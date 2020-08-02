@@ -2,6 +2,8 @@ const express = require("express");
 const exphbs  = require('express-handlebars');
 const app = express();
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose');
+
 
 // Environment Varibale
 require('dotenv').config({path:"./config/keys.env"})
@@ -30,7 +32,10 @@ const userController = require("./controllers/user")
 app.use("/",generalContoller)
 app.use("/user",userController)
 
-
+mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true})
+.then(()=>{
+    console.log("Database is connect")
+})
 
 // Web Server 
 const PORT = process.env.PORT 

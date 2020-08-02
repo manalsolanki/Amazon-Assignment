@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const userModel = require('../models/user');
 
 
 const loginRoute = (req,res)=>{
@@ -116,27 +117,50 @@ const signUpPostRoute = (req,res)=>{
     
     if(Object.keys(errors).length == 0)
     {
-        // using Twilio SendGrid's v3 Node.js Library
-        // https://github.com/sendgrid/sendgrid-nodejs
-        const sgMail = require('@sendgrid/mail');
-        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-        const msg = {
-        to: `${email}`,
-        from: '97manal@gmail.com',
-        subject: 'Welcome to Amazon',
-        //   text: 'and easy to do anywhere, even with Node.js',
-        html: `<p style ="font-size : 25px"> Hello ${firstName} ${lastName} </p>
-                <p style ="color : red "> Welcome to Amazon </p> 
-            <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
-        };
-        sgMail.send(msg)
-        . then(()=>{
+
+        // Adding the data to the database.
+        const user = new userModel({
+            firstName:firstName,
+            lastName:lastName,
+            email:email,
+            password:password,
+            
+        }) 
+
+        user.save()
+        .then((user)=>{
             res.redirect("/dashboard");
         })
-        . catch(err=>{
-            console.log(`Error ${err}`);
-        });
+        .catch(err=>console.log(`Error occured when registration data was uploaded${err}`))
+
+
+    
+        // // using Twilio SendGrid's v3 Node.js Library
+        // // https://github.com/sendgrid/sendgrid-nodejs
+        // const sgMail = require('@sendgrid/mail');
+        // sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+        // const msg = {
+        // to: `${email}`,
+        // from: '97manal@gmail.com',
+        // subject: 'Welcome to Amazon',
+        // //   text: 'and easy to do anywhere, even with Node.js',
+        // html: `<p style ="font-size : 25px"> Hello ${firstName} ${lastName} </p>
+        //         <p style ="color : red "> Welcome to Amazon </p> 
+        //     <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
+        // };
+        // sgMail.send(msg)
+        // . then(()=>{
+            
+        // })
+        // . catch(err=>{
+        //     console.log(`Error ${err}`);
+        // });
+
+
+
+        
     }
+    
     
 }
 
