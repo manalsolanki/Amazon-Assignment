@@ -3,6 +3,7 @@ const exphbs  = require('express-handlebars');
 const app = express();
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
 
 
 // Environment Varibale
@@ -23,14 +24,34 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static("public"));
 
 
+// File upload
+app.use(fileUpload());
+
 
 // Load Each controller
 const generalContoller = require("./controllers/general")
 const userController = require("./controllers/user")
+const productController=require("./controllers/product")
+
+
+// This is to allow specific forms and/links  that were submiited/pressed to send PUT and DELETE request.
+app.use((req,res,next)=>{
+    if (req.query.method=="PUT")
+    {
+        req.method="PUT"
+    }
+    else if(req.query.method=="DELETE")
+    {
+        req.method="DELETE"
+    }
+    next();
+})
+
 
 // map each controller to the app object 
 app.use("/",generalContoller)
 app.use("/user",userController)
+app.use("/product",productController)
 
 mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=>{

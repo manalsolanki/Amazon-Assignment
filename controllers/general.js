@@ -21,7 +21,7 @@ router.get("/",(req,res)=>{
 // This calls the Product List page.
 
 router.get("/product",(req,res)=>{
-    res.render("product",{
+    res.render("product/product",{
         title : "Product",
         products : fakeProductDB.getproductdetails()
     })
@@ -33,6 +33,8 @@ const renderDashboard = (req,res)=>{
         title : "Welcome Page",  
     })
 }
+
+
 
 
 router.get('/dashboard',renderDashboard)

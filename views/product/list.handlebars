@@ -1,0 +1,29 @@
+<section>
+    <h2 class="heading">Product List</h2>
+    <a href="/product/add" class=" heading product-add-button">
+        <h3>Add product to the list </h3>
+        <span class="material-icons">
+            add_circle
+        </span>
+    </a>
+
+    <div class="product-container">
+        {{#each data}}
+        <div class="detailed-card">
+            <img src="/img/camera.jpg" />
+            <h4>{{this.name}}</h4>
+            <p>{{this.description}}</p>
+            <p>Price: $ <b>{{this.price}}</b> </p>
+            <p>Best Seller:<b> {{this.bestSeller}}</b></p>
+            <p>Category: <b>{{this.category}}</b></p>
+            <a class="edit-button" href="/product/edit/{{this.id}}">Edit product details</a>
+            <a class="delete-button" href="/product/delete/{{this.id}}?method=DELETE">Delete product</a>
+        </div>
+        {{else}}
+        <div>
+            <h2>No data Found in the List.</h2>
+        </div>
+        {{/each}}
+
+    </div>
+</section>

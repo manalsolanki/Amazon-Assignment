@@ -4,7 +4,7 @@ const userModel = require('../models/user');
 
 
 const loginRoute = (req,res)=>{
-    res.render("login",{
+    res.render("user/login",{
         title:"Login"
     })
 }
@@ -27,7 +27,7 @@ const loginPostRoute = (req,res)=>{
     
     if(Object.keys(errors).length > 0 )
     {
-        res.render("login" , {
+        res.render("user/login" , {
             title: "Login",
             errormessage :errors,
             value : value
@@ -40,7 +40,7 @@ const loginPostRoute = (req,res)=>{
 
 // This calls the Sign Up
 const signUpRoute = (req,res)=>{
-    res.render("sign-up",{
+    res.render("user/sign-up",{
         title:"Sign-Up"
     })
 }
@@ -106,7 +106,7 @@ const signUpPostRoute = (req,res)=>{
     // Checking for the errors if there are then it will send otherwise it will redirect to the dashboard page.
     if(Object.keys(errors).length > 0 )
     {
-        res.render("sign-up" , {
+        res.render("user/sign-up" , {
             title: "Sign-Up",
             errormessage :errors,
             value : values
@@ -131,7 +131,15 @@ const signUpPostRoute = (req,res)=>{
         .then((user)=>{
             res.redirect("/dashboard");
         })
-        .catch(err=>console.log(`Error occured when registration data was uploaded${err}`))
+        .catch((err)=>{
+            errors.email="Email already exists"
+            res.render("user/sign-up",{
+                title:"Sign-up",
+                errormessage:errors,
+                value:values
+            })
+
+        })
 
 
     

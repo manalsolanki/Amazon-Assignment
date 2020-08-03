@@ -1,0 +1,61 @@
+/* Inventory Page */
+.add-product{
+    padding: 1em;
+    border-radius: 5px;
+    border: 1px solid black;
+    width: 30em;
+}
+.radio{
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+}
+.radiobutton{
+    width: auto;
+}
+
+
+
+
+
+/* Listing Page of Product */
+.product-container{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1em;
+        margin: 2em 4em;
+}
+.edit-button
+{
+    display:inline-block;
+    text-decoration: none;
+    background-color:black;
+    color:wheat;
+    padding:5px 10px; 
+    border-radius: 5px;
+}
+.delete-button
+{
+    display:inline-block;
+    text-decoration: none;
+    background-color:red;
+    color:#fff;
+    padding:5px 10px; 
+    border-radius: 5px;
+    margin-top:1em;
+}
+
+.product-add-button{
+    display: flex;
+    background-color: #40688f;
+    color: white;
+    width: fit-content;
+    border-radius: 5px; 
+    padding:0.5em;
+}
+.product-add-button h3{
+    color: white    ;
+}
+.product-add-button .material-icons{
+    margin : 16px;
+}
