@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
+const productModel = require('../models/products.js');
 const CategoryDB = require("../models/product-category");
 const ProductDB = require("../models/product-list");
 
@@ -11,21 +12,28 @@ const fakeProductDB = new ProductDB();
 
 // This calls the home page.
 router.get("/",(req,res)=>{
-    res.render("index",{
-        title : "Home",
-        products : fakeCategoryDB.getProduct(),
-        bestsellers : fakeProductDB.getfeaturedproduct()
+    productModel.find({bestSeller:"true"})
+    .then((products)=>{
+        const filteredProduct = products.map(product=>{
+         
+            return{
+                id:product._id,
+                image:product.image  
+            }
+        })
+        res.render("index",{title: "Home" ,products : fakeCategoryDB.getProduct(),bestsellers:filteredProduct})
+        console.log(filteredProduct)
     })
+    .catch(err=>console.log(`Error occured during pilling data from product.--${err}`))
+    // res.render("index",{
+    //     title : "Home",
+    //     products : fakeCategoryDB.getProduct(),
+    //     bestsellers : fakeProductDB.getfeaturedproduct()
+    // })
 })
 
 // This calls the Product List page.
 
-router.get("/product",(req,res)=>{
-    res.render("product/product",{
-        title : "Product",
-        products : fakeProductDB.getproductdetails()
-    })
-})
 
 // This calls the Dashboard 
 const renderDashboard = (req,res)=>{

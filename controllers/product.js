@@ -4,6 +4,32 @@ const productModel = require('../models/products.js');
 const path = require("path");
 
 
+router.get("/",(req,res)=>{
+    productModel.find()
+    .then((products)=>{
+        const filteredProduct = products.map(product=>{
+         
+            return{
+                id:product._id,
+                name:product.name,
+                price:product.price,
+                description:product.description,
+                category:product.category,
+                quantity:product.quantity,
+                bestSeller:product.bestSeller,
+                image:product.image , 
+                
+            }
+           
+        })
+        
+        res.render("product/product",{title: "Product" , products : filteredProduct})
+    })
+    .catch(err=>console.log(`Error occured during pilling data from product.--${err}`))
+  
+})
+
+
 router.get("/list",(req,res)=>{
     productModel.find()
     .then((products)=>{
