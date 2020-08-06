@@ -29,6 +29,10 @@ const productSchema = new Schema(
             type: Boolean,
             required:true
         },
+        image:{
+            type:String,
+            
+        },
             
         dateCreated:{
             type: Date,

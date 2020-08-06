@@ -3,7 +3,7 @@
         <h1 class="heading-centre">Add a Product</h1>
         <div class="line"></div>
 
-        <form method="POST" action="/product/add" >
+        <form method="POST" action="/product/add" enctype="multipart/form-data" >
             <div class="form-element">
                 <label for="name">
                     Product Name
@@ -57,10 +57,7 @@
                     Product Quantity
                 </label>
                 <div>
-                    <input type="number" name="quantity" id="quantity" placeholder="Enter quantity of the product" value="{{value.quantity}}">
-                </div>
-                <div class="error-message">
-                    {{errormessage.quantity}}
+                    <input type="number" name="quantity" id="quantity" placeholder="Enter quantity of the product" min="1" value="{{value.quantity}}">
                 </div>
             </div>
 

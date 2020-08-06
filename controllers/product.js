@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const productModel = require('../models/products.js');
+const path = require("path");
 
 
 router.get("/list",(req,res)=>{
@@ -15,7 +16,9 @@ router.get("/list",(req,res)=>{
                 description:product.description,
                 category:product.category,
                 quantity:product.quantity,
-                bestSeller:product.bestSeller
+                bestSeller:product.bestSeller,
+                image:product.image
+
                 
             }
         })
@@ -42,34 +45,29 @@ router.post("/add",(req,res)=>{
         category : req.body.category,
         quantity : req.body.quantity,
         bestSeller : req.body.bestSeller,
-    }
-    const values = { ...req.body}
-    const errors = { }
-    if(newProduct.quantity < 1)
-    {
-        errors.quantity="Qunatity should not be less than 0. "
-    }
-    if(Object.keys(errors).length > 0 )
-    {
-        res.render("product/inventoryClerk" , {
-            title: "Add",
-            errormessage :errors,
-            value : values
-        });
+        
     }
     
-
-    if(Object.keys(errors).length==0)
-    {
-        
-        const product = new productModel(newProduct ) 
+   
+     const product = new productModel(newProduct ) 
 
         product.save()
         .then((product)=>{
-            res.redirect("/product/list");
+
+            req.files.image.name = `${product._id}${req.files.image.name }`
+            req.files.image.mv(`public/uploads/${req.files.image.name}`)
+            .then(()=>{
+                productModel.updateOne({_id:product._id},{image :req.files.image.name })
+                .then(()=>{
+                    res.redirect(`/product/list`);
+                })
+                .catch(err=>console.log(err))
+
+            })
+            .catch(err=>console.log(err))
         })
         .catch(err=>console.log(err))
-    }
+    
   
 })
 
@@ -80,5 +78,12 @@ router.delete('/delete/:id',(req,res)=>{
         res.redirect("/product/list")
      } )
     .catch(err=>console.log(err))
+})
+
+
+
+
+router.get('/description',(req,res)=>{
+    res.render("product/description")
 })
 module.exports=router

@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 
 
+'use strict';
+
 // Environment Varibale
 require('dotenv').config({path:"./config/keys.env"})
 

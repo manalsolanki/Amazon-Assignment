@@ -10,7 +10,7 @@
     <div class="product-container">
         {{#each data}}
         <div class="detailed-card">
-            <img src="/img/camera.jpg" />
+            <img src="/uploads/{{this.image}}" />
             <h4>{{this.name}}</h4>
             <p>{{this.description}}</p>
             <p>Price: $ <b>{{this.price}}</b> </p>
@@ -18,6 +18,7 @@
             <p>Category: <b>{{this.category}}</b></p>
             <a class="edit-button" href="/product/edit/{{this.id}}">Edit product details</a>
             <a class="delete-button" href="/product/delete/{{this.id}}?method=DELETE">Delete product</a>
+            
         </div>
         {{else}}
         <div>
