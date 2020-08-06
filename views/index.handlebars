@@ -30,7 +30,9 @@
         <div class="bestseller-card">
             {{#each bestsellers }}
             <div class="detailed-card">
+            <a href="/product/description/{{this.id}}">
                 <img src="/uploads/{{this.image}}" />
+            </a>    
             </div>
             {{/each}}
     </section>

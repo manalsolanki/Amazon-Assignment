@@ -8,7 +8,7 @@ const ProductDB = require("../models/product-list");
 // Object of Category List
 const fakeCategoryDB = new CategoryDB();
 // object of Product list
-const fakeProductDB = new ProductDB();
+// const fakeProductDB = new ProductDB();
 
 // This calls the home page.
 router.get("/",(req,res)=>{

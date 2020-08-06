@@ -90,6 +90,10 @@
    transition: all 1s;
 }
 
+.detailed-card img{
+    height: 310px;
+}
+
 .product-card img{
     height: 300px;
 }
@@ -113,7 +117,15 @@
     text-align: right;
     background-color: white;
 }
+.category-search{
+    display: flex;
+    margin:1em;
+}
+.category-search .submit-button{
+    width: auto;
+    margin-left: 2em;
 
+}
 
 /* Media Query for Ipad Version */
 @media(max-width : 768px){

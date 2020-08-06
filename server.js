@@ -14,7 +14,15 @@ require('dotenv').config({path:"./config/keys.env"})
 
 
 // Tells Express to set handlebars as its template engine.
-app.engine('handlebars', exphbs());
+app.engine("handlebars",exphbs(
+    {
+        helpers:{
+            if_eq  : function(v1,v2){
+                return v1===v2 ? 'selected' : '' ;
+            }
+        }
+    }
+));
 app.set('view engine', 'handlebars');
 
 

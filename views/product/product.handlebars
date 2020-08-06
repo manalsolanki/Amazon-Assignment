@@ -1,20 +1,37 @@
 <section>
+    <form method="POST" action="/product">
+        <article class="category-search">
+            <div class="form-element">
+                <label>Product Category</label>
+                <select name="category">
+                    <option value="electronics" {{if_eq category "electronics"}}>Electronics</option>
+                    <option value="mens" {{if_eq category "mens"}}>Mens</option>
+                    <option value="womens"{{if_eq category "womens"}}>Womens</option>
+                    <option value="kids"{{if_eq category "kids"}}>Kids</option>
+                    <option value="books"{{if_eq category "books"}}>Books</option>
+                </select>
+            </div>
+            <input class="submit-button" type="Submit" value="Submit">
+        </article>
+    </form>
     <h2 class="heading">Electronics</h2>
-    <div class = "product-card">
+    <div class="product-card">
         {{#each products }}
+        <a href="/product/description/{{this.id}}">
             <div class="detailed-card">
-            <img src ="/uploads/{{this.image}}"/>
-            <h4>{{this.name}}</h4>
-            <p>{{this.description}}</p>
-            <div class="bottom-card">
-                <p class="price"> CAD {{this.price}}</p>
-                <button class="button-cart">
-                     <span class="material-icons">
-								shopping_cart
-					</span>
-                </button>
+                <img src="/uploads/{{this.image}}" />
+                <h4>{{this.name}}</h4>
+                <p>{{this.description}}</p>
+                <div class="bottom-card">
+                    <p class="price"> CAD {{this.price}}</p>
+                    <button class="button-cart">
+                        <span class="material-icons">
+                            shopping_cart
+                        </span>
+                    </button>
+                </div>
             </div>
-            </div>
+        </a>
         {{/each}}
 
     </div>
