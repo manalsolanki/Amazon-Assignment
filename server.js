@@ -19,6 +19,10 @@ app.engine("handlebars",exphbs(
         helpers:{
             if_eq  : function(v1,v2){
                 return v1===v2 ? 'selected' : '' ;
+            },
+
+            if_checked : function(v1,v2){
+                return v1===v2 ? 'checked': '';
             }
         }
     }

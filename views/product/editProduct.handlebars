@@ -1,0 +1,88 @@
+<section class="login-form">
+    <div class="add-product">
+        <h1 class="heading-centre">Add a Product</h1>
+        <div class="line"></div>
+
+        <form method="POST" action="/product/update/{{_id}}?method=PUT" >
+            <div class="form-element">
+                <label for="name">
+                    Product Name
+                </label>
+                <div>
+                    <input type="text" name="name" id="name" placeholder="Enter name of the product" value="{{name}}">
+                </div>
+                {{!-- <div class="error-message">
+                    {{errormessage.firstName}}
+                </div> --}}
+            </div>
+
+            <div class="form-element">
+                <label for="price">
+                    Product Price
+                </label>
+                <div>
+                    <input type="text" name="price" id="price" placeholder="Enter price of the product" value="{{price}}">
+                </div>
+                {{!-- <div class="error-message">
+                    {{errormessage.firstName}}
+                </div> --}}
+            </div>
+
+            <div class="form-element">
+                <label for="productDescription">
+                    Product Description
+                </label>
+                <div>
+                    <textarea id="description" name="description">{{description}}</textarea><br><br>
+                </div>
+                {{!-- <div class="error-message">
+                    {{errormessage.firstName}}
+                </div> --}}
+            </div>
+
+            <div class="form-element">
+                <label>Product Category</label>
+
+                <select name="category">
+                    <option value="electronics" {{if_eq category "electronics"}}>Electronics</option>
+                    <option value="mens" {{if_eq category "mens"}}>Mens</option>
+                    <option value="womens"{{if_eq category "womens"}}>Womens</option>
+                    <option value="kids"{{if_eq category "kids"}}>Kids</option>
+                    <option value="books"{{if_eq category "books"}}>Books</option>
+                </select>
+            </div>
+
+            <div class="form-element">
+                <label for="quantity">
+                    Product Quantity
+                </label>
+                <div>
+                    <input type="number" name="quantity" id="quantity" placeholder="Enter quantity of the product" min="1" value="{{quantity}}">
+                </div>
+            </div>
+
+            <div class="form-element">
+                <p>BestSeller</p>
+                <div class="radio">
+                    <div>
+                        <input class="radiobutton" type="radio" id="yes" name="bestSeller" value="true" {{if_checked bestSeller true}}>
+                        <label for="yes">Yes</label>
+                    </div>
+                    <div>
+                        <input class="radiobutton" type="radio" id="no" name="bestSeller" value="false" {{if_checked bestSeller false}}>
+                        <label for="no">No</label><br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-element">
+                <label>File Upload</label>
+                <input type="file" name="image" id="image">{{image}}
+            </div>
+
+            <div>
+                <input class="submit-button" type="Submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</section>
