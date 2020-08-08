@@ -33,10 +33,17 @@
 
 
 					<li class="dropdown">
-						<button class="dropbtn hide-content">Login</button>
+						<button class="dropbtn hide-content">Login/Logout</button>
 						<div class="dropdown-content">
-							<a href="/user/login">Log In</a>
+							{{#if user }}
+							 <a href="/user/logout">Log Out</a>
+							 {{else}}
+							 <a href="/user/login">Log In</a>
 							<a href="/user/sign-up">Sign Up</a>
+							 
+							 {{/if}}
+							
+							
 							<a href="/">My Profile</a>
 							<a href="/">Wishlist</a>
 							<a href="/">Rewards </a>
@@ -53,7 +60,7 @@
 						</div>
 					</li>
 					<li class="dropdown ">
-						<a class="dropbtn" href="">
+						<a class="dropbtn" href="/product/cart">
 							<span class="material-icons">
 								shopping_cart
 							</span> <span class="hide-content"> Cart </span></span>
@@ -77,8 +84,12 @@
 	</header>
 	<div class="side-menu" id= "sideMenu">
 		<ul>
-			<li class="side-menu-list"><a href ="/user/login">Log In</a></li>
-			<li class="side-menu-list"><a href="/user/sign-up">Sign Up</a></li>
+			{{#if user}}
+				<li class="side-menu-list"><a href="/user/logout">Log Out</a></li>
+			{{else}}
+				<li class="side-menu-list"><a href ="/user/login">Log In</a></li>
+				<li class="side-menu-list"><a href="/user/sign-up">Sign Up</a></li>
+			{{/if}}
 			<li class="side-menu-list" >My Profile </li>
 			<li class="side-menu-list">My Wishlist</li>
 			<li class="side-menu-list">Sell on Amazon</li>

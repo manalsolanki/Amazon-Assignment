@@ -24,7 +24,7 @@ router.get("/",(req,res)=>{
         res.render("index",{title: "Home" ,products : fakeCategoryDB.getProduct(),bestsellers:filteredProduct})
         console.log(filteredProduct)
     })
-    .catch(err=>console.log(`Error occured during pilling data from product.--${err}`))
+    .catch(err=>console.log(`Error occured during pilling data from product.--${err}`));
     // res.render("index",{
     //     title : "Home",
     //     products : fakeCategoryDB.getProduct(),

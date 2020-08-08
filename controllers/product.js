@@ -48,7 +48,7 @@ router.post("/", (req, res) => {
                 }
 
             })
-            res.render("product/product", { title: "Product", products: filteredProduct, category: newCategory })
+            res.render("product/product", { title: "Product", products: filteredProduct,  newCategory })
         })
         .catch(err => console.log(`Error occured during pilling data from product.--${err}`))
 
@@ -145,7 +145,7 @@ router.put('/update/:id', (req, res) => {
         bestSeller: req.body.bestSeller,
         
     }
-    console.log(req.files)
+    
     productModel.updateOne({_id:product._id},product)
         .then(()=>{
             res.redirect("/product/list")
@@ -189,8 +189,13 @@ router.get(`/description/:id`, (req, res) => {
 
 })
 
-
+router.get('/cart',(req,res)=>{
+    res.render("product/shopping-cart")
+})
 router.post('/description/:id', (req, res) => {
     res.render("product/shopping-cart")
 })
+
+
+
 module.exports = router

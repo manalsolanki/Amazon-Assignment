@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userModel = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 
 const loginRoute = (req,res)=>{
@@ -33,10 +34,47 @@ const loginPostRoute = (req,res)=>{
             value : value
         });
     }
-    else{
-        res.redirect("/");
-    }  
+    else
+    {
+        userModel.findOne({ email: email})
+        .then((user) => {
+           
+            // email not found
+            if (user == null) {
+                errors.validation = "Please Enter a correct email address or password."
+                res.render("user/login" , {
+                    title: "Login",
+                    errormessage :errors,
+                    value : value
+                });
+            }
+            // email found
+            else {
+                bcrypt.compare(password, user.password)
+                    .then((isMatched) => {
+                        if (isMatched) {
+
+                            req.session.userInfo = user;
+                            res.redirect("/user/profile")
+                        }
+                        else 
+                        {
+                            errors.validation = "Sorry Enter valid username"
+                            res.render("user/login" , {
+                                title: "Login",
+                                errormessage :errors,
+                                value : value
+                            });
+                        }
+                    })
+                    .catch(err => console.log(err))
+
+            }
+        })
+        .catch(err => console.log(err))
+    }    
 }
+     
 
 // This calls the Sign Up
 const signUpRoute = (req,res)=>{
@@ -129,7 +167,7 @@ const signUpPostRoute = (req,res)=>{
 
         user.save()
         .then((user)=>{
-            res.redirect("/dashboard");
+            res.redirect("/user/login");
         })
         .catch((err)=>{
             errors.email="Email already exists"
@@ -171,11 +209,19 @@ const signUpPostRoute = (req,res)=>{
     
     
 }
+const logoutRoute = (req,res)=>{
+    req.session.destroy();
+    res.redirect("/")
+}
 
 
+router.get("/profile",(req,res)=>{
+    res.redirect("/dashboard")
+})
 
 router.get("/login",loginRoute);
 router.post("/login",loginPostRoute);
 router.get("/sign-up",signUpRoute);
 router.post("/sign-up",signUpPostRoute);
+router.get("/logout",logoutRoute);
 module.exports=router;

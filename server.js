@@ -4,7 +4,13 @@ const app = express();
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+const session = require('express-session');
 
+
+// Load Each controller
+const generalContoller = require("./controllers/general")
+const userController = require("./controllers/user")
+const productController=require("./controllers/product")
 
 'use strict';
 
@@ -41,11 +47,14 @@ app.use(express.static("public"));
 // File upload
 app.use(fileUpload());
 
+// Middleware for session.
+app.use(session({
+    secret: `${process.env.SECRET_KEY}`,
+    resave: false,
+    saveUninitialized: true,
+   
+  }))
 
-// Load Each controller
-const generalContoller = require("./controllers/general")
-const userController = require("./controllers/user")
-const productController=require("./controllers/product")
 
 
 // This is to allow specific forms and/links  that were submiited/pressed to send PUT and DELETE request.
@@ -61,6 +70,10 @@ app.use((req,res,next)=>{
     next();
 })
 
+app.use((req,res,next)=>{
+    res.locals.user = req.session.userInfo;
+    next();
+})
 
 // map each controller to the app object 
 app.use("/",generalContoller)
