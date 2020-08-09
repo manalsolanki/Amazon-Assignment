@@ -47,7 +47,7 @@ router.post("/", (req, res) => {
                 }
 
             })
-            res.render("product/product", { title: "Product", products: filteredProduct,  newCategory })
+            res.render("product/product", { title: "Product", products: filteredProduct, newCategory })
         })
         .catch(err => console.log(`Error occured during pilling data from product.--${err}`))
 
@@ -56,54 +56,50 @@ router.post("/", (req, res) => {
 
 
 // This Route is for the lisitng of all products.
-router.get("/list",isAuthenticated, (req, res) => {
-    if(req.session.userInfo.typeOfUser == "Admin")
-    {
+router.get("/list", isAuthenticated, (req, res) => {
+    if (req.session.userInfo.typeOfUser == "Admin") {
         productModel.find()
-        .then((products) => {
-            const filteredProduct = products.map(product => {
+            .then((products) => {
+                const filteredProduct = products.map(product => {
 
-                return {
-                    id: product._id,
-                    name: product.name,
-                    price: product.price,
-                    description: product.description,
-                    category: product.category,
-                    quantity: product.quantity,
-                    bestSeller: product.bestSeller,
-                    image: product.image
-                }
+                    return {
+                        id: product._id,
+                        name: product.name,
+                        price: product.price,
+                        description: product.description,
+                        category: product.category,
+                        quantity: product.quantity,
+                        bestSeller: product.bestSeller,
+                        image: product.image
+                    }
+                })
+                res.render("product/list", { data: filteredProduct })
             })
-            res.render("product/list", { data: filteredProduct })
-        })
-        .catch(err => console.log(`Error occured during pilling data from product.--${err}`))
+            .catch(err => console.log(`Error occured during pilling data from product.--${err}`))
     }
-    else
-    {
+    else {
         res.redirect("/user/login")
     }
-    
+
 
 })
 
 
 // This calls the inventory Page.
 
-router.get("/add",isAuthenticated, (req, res) => {
- console.log(req.session.userInfo.typeOfUser)
-    if(req.session.userInfo.typeOfUser == "Admin")
-    {
+router.get("/add", isAuthenticated, (req, res) => {
+    console.log(req.session.userInfo.typeOfUser)
+    if (req.session.userInfo.typeOfUser == "Admin") {
 
         res.render("product/inventoryClerk", {
             title: "Inventory-Clerk"
         })
     }
-    else
-    {
-        console.log(req.session.userInfo.typeOfUser )
+    else {
+        console.log(req.session.userInfo.typeOfUser)
         res.redirect("/user/login")
     }
-   
+
 })
 
 router.post("/add", (req, res) => {
@@ -140,34 +136,34 @@ router.post("/add", (req, res) => {
 
 })
 
-router.get('/edit/:id', isAuthenticated,(req, res) => {
+router.get('/edit/:id', isAuthenticated, (req, res) => {
     productModel.findById(req.params.id)
         .then((product) => {
             const { _id, name, description, price, bestSeller, category, image, quantity } = product
             res.render('product/editProduct', { _id, name, description, price, bestSeller, category, image, quantity })
-           
+
         })
         .catch(err => console.log(err))
 })
 
 router.put('/update/:id', (req, res) => {
-   
+
     const product = {
-        _id:req.params.id,
+        _id: req.params.id,
         name: req.body.name,
         price: req.body.price,
         description: req.body.description,
         category: req.body.category,
         quantity: req.body.quantity,
         bestSeller: req.body.bestSeller,
-        
+
     }
-    
-    productModel.updateOne({_id:product._id},product)
-        .then(()=>{
+
+    productModel.updateOne({ _id: product._id }, product)
+        .then(() => {
             res.redirect("/product/list")
         })
-        .catch(err=>console.log(err))
+        .catch(err => console.log(err))
     // req.files.image.name = `${product._id}${req.files.image.name}`
     // product.image=req.files.image.name 
     // req.files.image.mv(`public/uploads/${req.files.image.name}`)
@@ -182,7 +178,7 @@ router.put('/update/:id', (req, res) => {
 
 })
 
-router.delete('/delete/:id', isAuthenticated,(req, res) => {
+router.delete('/delete/:id', isAuthenticated, (req, res) => {
     productModel.deleteOne({ _id: req.params.id })
         .then(() => {
             res.redirect("/product/list")
@@ -206,37 +202,85 @@ router.get(`/description/:id`, (req, res) => {
 
 })
 
-router.get('/cart',(req,res)=>{
-    
+router.get('/cart', isAuthenticated, (req, res) => {
+
     const productDetail = req.session.userInfo.cart
-    console.log(productDetail)
-    // if(req.session.userInfo.typeOfUser == "Admin")
-    // {
-        res.render("product/shopping-cart")
-        
+    // console.log(productDetail)
+
+
+    let finalProduct = []
+    productDetail.forEach(eachproduct => {
+        productModel.findById(eachproduct.product_id)
+        .then((product) => {
+            const newProduct = {
+                id: product._id,
+                name: product.name,
+                description: product.description,
+                price: product.price
+            }
+                
+                finalProduct.push(newProduct)
+        })
+        .catch(err => console.log(err))
+
+    })
+    console.log(finalProduct)
+    res.render("product/shopping-cart", {
+        data: finalProduct
+    })
+
+    //  if(req.session.userInfo.typeOfUser == "Admin")
+    //  {
+    //     res.render("product/shopping-cart")
+
     //  }
     // else{
     //     res.redirect("/user/login")
-    //  }
-  
+    //   }
+
+})
+
+router.post('/cart', (req, res) => {
+
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+    const msg = {
+        to: `${req.session.userInfo.email}`,
+        from: '97manal@gmail.com',
+        subject: 'Thanks for ordering from Amazon',
+        //   text: 'and easy to do anywhere, even with Node.js',
+        html: `<p style ="font-size : 25px"> Thank you. </p>
+    <p style ="color : red "> Welcome to Amazon </p> 
+<a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
+    };
+    sgMail.send(msg)
+        .then(() => {
+            res.redirect("/");
+
+        })
+        .catch(err => {
+            console.log(`Error ${err}`);
+        });
+
 })
 router.post('/description/:id', (req, res) => {
-  
-    if(req.session.userInfo.typeOfUser == "Admin")
-    {
-        res.redirect("/user/login")
+    if (req.session.userInfo) {
+        if (req.session.userInfo.typeOfUser == "Admin") {
+            res.redirect("/user/login")
+        }
+        else {
+            const newCart = [{ quantity: req.body.quantity, product_id: req.params.id }]
+            userModel.updateOne({ email: req.session.userInfo.email }, { $push: { cart: newCart } })
+                .then(() => {
+                    res.render("product/shopping-cart")
+                })
+                .catch(err => console.log(err))
+
+        }
     }
-    else
-    {  
-        const newCart = [{quantity:req.body.quantity , product_id :req.params.id}]
-        userModel.updateOne({ email: req.session.userInfo.email }, {$push : { cart:newCart} })
-        .then(()=>{
-            res.render("product/shopping-cart")
-        })
-        .catch(err=>console.log(err))
-        
+    else {
+        res.redirect('/user/login')
     }
-  
 })
 
 
