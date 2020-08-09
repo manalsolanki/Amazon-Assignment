@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const userModel = require('../models/user');
 const bcrypt = require('bcryptjs');
+const isAuthenticated = require("../middleware/auth");
+const dashboardLoader = require("../middleware/authorization")
 
 
 const loginRoute = (req,res)=>{
@@ -59,7 +61,7 @@ const loginPostRoute = (req,res)=>{
                         }
                         else 
                         {
-                            errors.validation = "Sorry Enter valid username"
+                            errors.validation = "Please Enter a correct email address or password."
                             res.render("user/login" , {
                                 title: "Login",
                                 errormessage :errors,
@@ -215,9 +217,7 @@ const logoutRoute = (req,res)=>{
 }
 
 
-router.get("/profile",(req,res)=>{
-    res.redirect("/dashboard")
-})
+router.get("/profile",isAuthenticated,dashboardLoader)
 
 router.get("/login",loginRoute);
 router.post("/login",loginPostRoute);

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const {Schema , model}=require('mongoose');
-
+const cartSchema = new Schema({ product_id: String , quantity : Number });
 // const Schema = mongoose.Schema;
 const userSchema = new Schema(
     {
@@ -27,7 +27,11 @@ const userSchema = new Schema(
             type:String,
             default:"Regular user"
         },
-            
+        cart:
+        {
+            type:[cartSchema],
+           
+        } , 
         dateCreated:{
             type: Date,
             default:Date.now()

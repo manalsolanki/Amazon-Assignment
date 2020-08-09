@@ -22,7 +22,7 @@ router.get("/",(req,res)=>{
             }
         })
         res.render("index",{title: "Home" ,products : fakeCategoryDB.getProduct(),bestsellers:filteredProduct})
-        console.log(filteredProduct)
+   
     })
     .catch(err=>console.log(`Error occured during pilling data from product.--${err}`));
     // res.render("index",{
@@ -36,14 +36,14 @@ router.get("/",(req,res)=>{
 
 
 // This calls the Dashboard 
-const renderDashboard = (req,res)=>{
-    res.render("dashboard", {
-        title : "Welcome Page",  
-    })
-}
+// const renderDashboard = (req,res)=>{
+//     res.render("dashboard", {
+//         title : "Welcome Page",  
+//     })
+// }
 
 
 
 
-router.get('/dashboard',renderDashboard)
+// router.get('/dashboard',renderDashboard)
 module.exports=router

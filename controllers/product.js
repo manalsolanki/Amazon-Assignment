@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const productModel = require('../models/products.js');
+const userModel = require('../models/user');
 const path = require("path");
-const { Console } = require('console');
-const { update } = require('../models/products.js');
-const { compareSync } = require('bcryptjs');
+const isAuthenticated = require("../middleware/auth");
 
 // This calls the Product Page.
 router.get("/", (req, res) => {
@@ -52,14 +51,15 @@ router.post("/", (req, res) => {
         })
         .catch(err => console.log(`Error occured during pilling data from product.--${err}`))
 
-    console.log(newCategory)
 })
 
 
 
 // This Route is for the lisitng of all products.
-router.get("/list", (req, res) => {
-    productModel.find()
+router.get("/list",isAuthenticated, (req, res) => {
+    if(req.session.userInfo.typeOfUser == "Admin")
+    {
+        productModel.find()
         .then((products) => {
             const filteredProduct = products.map(product => {
 
@@ -77,16 +77,33 @@ router.get("/list", (req, res) => {
             res.render("product/list", { data: filteredProduct })
         })
         .catch(err => console.log(`Error occured during pilling data from product.--${err}`))
+    }
+    else
+    {
+        res.redirect("/user/login")
+    }
+    
 
 })
 
 
 // This calls the inventory Page.
 
-router.get("/add", (req, res) => {
-    res.render("product/inventoryClerk", {
-        title: "Inventory-Clerk"
-    })
+router.get("/add",isAuthenticated, (req, res) => {
+ console.log(req.session.userInfo.typeOfUser)
+    if(req.session.userInfo.typeOfUser == "Admin")
+    {
+
+        res.render("product/inventoryClerk", {
+            title: "Inventory-Clerk"
+        })
+    }
+    else
+    {
+        console.log(req.session.userInfo.typeOfUser )
+        res.redirect("/user/login")
+    }
+   
 })
 
 router.post("/add", (req, res) => {
@@ -123,7 +140,7 @@ router.post("/add", (req, res) => {
 
 })
 
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', isAuthenticated,(req, res) => {
     productModel.findById(req.params.id)
         .then((product) => {
             const { _id, name, description, price, bestSeller, category, image, quantity } = product
@@ -165,7 +182,7 @@ router.put('/update/:id', (req, res) => {
 
 })
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', isAuthenticated,(req, res) => {
     productModel.deleteOne({ _id: req.params.id })
         .then(() => {
             res.redirect("/product/list")
@@ -190,10 +207,36 @@ router.get(`/description/:id`, (req, res) => {
 })
 
 router.get('/cart',(req,res)=>{
-    res.render("product/shopping-cart")
+    
+    const productDetail = req.session.userInfo.cart
+    console.log(productDetail)
+    // if(req.session.userInfo.typeOfUser == "Admin")
+    // {
+        res.render("product/shopping-cart")
+        
+    //  }
+    // else{
+    //     res.redirect("/user/login")
+    //  }
+  
 })
 router.post('/description/:id', (req, res) => {
-    res.render("product/shopping-cart")
+  
+    if(req.session.userInfo.typeOfUser == "Admin")
+    {
+        res.redirect("/user/login")
+    }
+    else
+    {  
+        const newCart = [{quantity:req.body.quantity , product_id :req.params.id}]
+        userModel.updateOne({ email: req.session.userInfo.email }, {$push : { cart:newCart} })
+        .then(()=>{
+            res.render("product/shopping-cart")
+        })
+        .catch(err=>console.log(err))
+        
+    }
+  
 })
 
 
