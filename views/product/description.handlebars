@@ -11,11 +11,11 @@
                         Product Quantity
                     </label>
                     <div>
-                        <input type="number" name="quantity" id="quantity" placeholder="Enter Qunatity" min="1"
+                        <input type="number" name="quantity" id="quantity" placeholder="Enter Qunatity" min="1" defaultValue="1"
                             value="{{value.quantity}}">
                     </div>
                     <div class="error-message">
-                        {{errormessage.quantity}}
+                        {{error}}
                     </div>
                     <input class="submit-button" type="Submit" value="Add to Cart">
                 </form>

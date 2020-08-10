@@ -120,7 +120,10 @@ router.post("/add", (req, res) => {
         .then((product) => {
 
             req.files.image.name = `${product._id}${req.files.image.name}`
-            req.files.image.mv(`public/uploads/${req.files.image.name}`)
+            if((req.files.image.mimetype) == "image/jpeg"||"image/jpg" || "image/png")
+            {
+                console.log(req.files.image.mimetype)
+                req.files.image.mv(`public/uploads/${req.files.image.name}`)
                 .then(() => {
                     productModel.updateOne({ _id: product._id }, { image: req.files.image.name })
                         .then(() => {
@@ -130,6 +133,13 @@ router.post("/add", (req, res) => {
 
                 })
                 .catch(err => console.log(err))
+            }
+            else
+            {
+                const error = "Please upload a appropriate file."
+                res.render("product/add" , {title:"Product add" , error})
+            }
+           
         })
         .catch(err => console.log(err))
 
@@ -203,32 +213,44 @@ router.get(`/description/:id`, (req, res) => {
 })
 
 router.get('/cart', isAuthenticated, (req, res) => {
-
-    const productDetail = req.session.userInfo.cart
+    let amount = 0
+    const productDetail = req.session.userInfo.cart;
     // console.log(productDetail)
-
-
-    let finalProduct = []
-    productDetail.forEach(eachproduct => {
-        productModel.findById(eachproduct.product_id)
+   console.log(productDetail)
+    // Promise.all([newProduct]).then((finalProduct)=>console.log(finalProduct))
+    let finalProduct = [];
+    console.log(finalProduct)
+   
+    let promiseArr = productDetail.map(eachproduct => {
+        return productModel.findById(eachproduct.product_id)
         .then((product) => {
+            amount = amount + product.price * eachproduct.quantity
             const newProduct = {
                 id: product._id,
                 name: product.name,
                 description: product.description,
-                price: product.price
-            }
+                price: product.price,
+                image:product.image,
+                quantity:eachproduct.quantity
                 
-                finalProduct.push(newProduct)
+            }
+            return (newProduct)
+                // finalProduct.push(newProduct)
+                // console.log(finalProduct)
         })
-        .catch(err => console.log(err))
-
+       
+        .catch((err) =>console.log(err))
+    
     })
-    console.log(finalProduct)
-    res.render("product/shopping-cart", {
-        data: finalProduct
-    })
+    Promise.all(promiseArr).then(data=>{
+        res.render("product/shopping-cart", {
+            data: data,amount
+        })
+    }) 
 
+    
+   
+   
     //  if(req.session.userInfo.typeOfUser == "Admin")
     //  {
     //     res.render("product/shopping-cart")
@@ -250,7 +272,7 @@ router.post('/cart', (req, res) => {
         subject: 'Thanks for ordering from Amazon',
         //   text: 'and easy to do anywhere, even with Node.js',
         html: `<p style ="font-size : 25px"> Thank you. </p>
-    <p style ="color : red "> Welcome to Amazon </p> 
+    <p style ="color : red "> Please Visit again here for Shopping. </p> 
 <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
     };
     sgMail.send(msg)
@@ -269,12 +291,14 @@ router.post('/description/:id', (req, res) => {
             res.redirect("/user/login")
         }
         else {
+            console.log(req.body.quantity)
             const newCart = [{ quantity: req.body.quantity, product_id: req.params.id }]
             userModel.updateOne({ email: req.session.userInfo.email }, { $push: { cart: newCart } })
                 .then(() => {
-                    res.render("product/shopping-cart")
+                    res.redirect("/product/cart")
                 })
                 .catch(err => console.log(err))
+            
 
         }
     }

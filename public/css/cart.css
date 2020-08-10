@@ -15,7 +15,7 @@
     width: 20em;
 }
 .cart-image{
-    width : 70px
+    width : 70px !important
 }
 .amount{
     text-align: center;
