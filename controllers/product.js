@@ -120,26 +120,24 @@ router.post("/add", (req, res) => {
         .then((product) => {
 
             req.files.image.name = `${product._id}${req.files.image.name}`
-            if((req.files.image.mimetype) == "image/jpeg"||"image/jpg" || "image/png")
-            {
+            if ((req.files.image.mimetype) == "image/jpeg" || "image/jpg" || "image/png") {
                 console.log(req.files.image.mimetype)
                 req.files.image.mv(`public/uploads/${req.files.image.name}`)
-                .then(() => {
-                    productModel.updateOne({ _id: product._id }, { image: req.files.image.name })
-                        .then(() => {
-                            res.redirect(`/product/list`);
-                        })
-                        .catch(err => console.log(err))
+                    .then(() => {
+                        productModel.updateOne({ _id: product._id }, { image: req.files.image.name })
+                            .then(() => {
+                                res.redirect(`/product/list`);
+                            })
+                            .catch(err => console.log(err))
 
-                })
-                .catch(err => console.log(err))
+                    })
+                    .catch(err => console.log(err))
             }
-            else
-            {
+            else {
                 const error = "Please upload a appropriate file."
-                res.render("product/add" , {title:"Product add" , error})
+                res.render("product/add", { title: "Product add", error })
             }
-           
+
         })
         .catch(err => console.log(err))
 
@@ -214,43 +212,49 @@ router.get(`/description/:id`, (req, res) => {
 
 router.get('/cart', isAuthenticated, (req, res) => {
     let amount = 0
-    const productDetail = req.session.userInfo.cart;
-    // console.log(productDetail)
-   console.log(productDetail)
-    // Promise.all([newProduct]).then((finalProduct)=>console.log(finalProduct))
-    let finalProduct = [];
-    console.log(finalProduct)
-   
-    let promiseArr = productDetail.map(eachproduct => {
-        return productModel.findById(eachproduct.product_id)
-        .then((product) => {
-            amount = amount + product.price * eachproduct.quantity
-            const newProduct = {
-                id: product._id,
-                name: product.name,
-                description: product.description,
-                price: product.price,
-                image:product.image,
-                quantity:eachproduct.quantity
-                
-            }
-            return (newProduct)
-                // finalProduct.push(newProduct)
-                // console.log(finalProduct)
-        })
-       
-        .catch((err) =>console.log(err))
-    
-    })
-    Promise.all(promiseArr).then(data=>{
-        res.render("product/shopping-cart", {
-            data: data,amount
-        })
-    }) 
+    const email = req.session.userInfo._id
+    userModel.findById(email)
+        .then((user) => {
+            const productDetail = user.cart
+            console.log(productDetail)
+            // Promise.all([newProduct]).then((finalProduct)=>console.log(finalProduct))
+            let finalProduct = [];
+            console.log(finalProduct)
 
-    
-   
-   
+            let promiseArr = productDetail.map(eachproduct => {
+                return productModel.findById(eachproduct.product_id)
+                    .then((product) => {
+                        amount = amount + product.price * eachproduct.quantity
+                        const newProduct = {
+                            id: product._id,
+                            name: product.name,
+                            description: product.description,
+                            price: product.price,
+                            image: product.image,
+                            quantity: eachproduct.quantity
+
+                        }
+                        return (newProduct)
+                        // finalProduct.push(newProduct)
+                        // console.log(finalProduct)
+                    })
+
+                    .catch((err) => console.log(err))
+
+            })
+            Promise.all(promiseArr).then(data => {
+                res.render("product/shopping-cart", {
+                    data: data, amount
+                })
+            })
+        })
+        .catch(err => console.log(err))
+    // console.log(productDetail)
+
+
+
+
+
     //  if(req.session.userInfo.typeOfUser == "Admin")
     //  {
     //     res.render("product/shopping-cart")
@@ -263,7 +267,7 @@ router.get('/cart', isAuthenticated, (req, res) => {
 })
 
 router.post('/cart', (req, res) => {
-
+    userModel.updateOne({id:req.session._id})
     const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
     const msg = {
@@ -298,7 +302,7 @@ router.post('/description/:id', (req, res) => {
                     res.redirect("/product/cart")
                 })
                 .catch(err => console.log(err))
-            
+
 
         }
     }
