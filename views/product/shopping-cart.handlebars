@@ -1,17 +1,22 @@
 <section>
     <h1 class="heading">Cart</h1>
     {{#each data}}
+    
     <div class="description-container">
         <img class="cart-image" src="/uploads/{{this.image}}">
         <article>
             <h4>{{this.name}}</h4>
             <h4>{{thid.description}}</h4>
-            <h4>Price Per Product :{{this.price}}</h4>
+            <h4>Price Per Product :{{this.price}} $</h4>
             <h4>Quantity :{{this.quantity}}</h4>
+            <h4>Total Price : {{this.each_amount}} $</h4>
+            <h4 class="error-message">{{error}}</h4>
         </article>
     </div>
-    {{/each}}
-    <h3 class="amount">Total Amount :{{amount}}</h3>
+    {{else}}
+   <h2 class="heading">No products added to the cart.</h2>
+   {{/each}}
+    <h3 class="amount">Total Amount :{{amount}} $</h3>
 
     <form method="POST" action="/product/cart">
     <div class="amount"> 

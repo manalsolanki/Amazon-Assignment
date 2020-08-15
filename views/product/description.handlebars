@@ -6,12 +6,12 @@
                 <h2>{{description}}</h2>
                 <h3><b>Price: </b>{{price}} $</h3>
                 <p>In Stock</p>
-                <form method="POST" action="/product/description/{{_id}}">
+                <form method="POST" action="/product/description/{{_id}} "name="quantity" id="validation">
                     <label for="quantity">
                         Product Quantity
                     </label>
                     <div>
-                        <input type="number" name="quantity" id="quantity" placeholder="Enter Qunatity" min="1" defaultValue="1"
+                        <input type="number" name="quantity" id="productquantity" placeholder="Enter Qunatity" min="1"
                             value="{{value.quantity}}">
                     </div>
                     <div class="error-message">

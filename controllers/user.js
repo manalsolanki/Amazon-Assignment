@@ -162,7 +162,7 @@ const signUpPostRoute = (req, res) => {
                     subject: 'Welcome to Amazon',
                     //   text: 'and easy to do anywhere, even with Node.js',
                     html: `<p style ="font-size : 25px"> Hello ${firstName} ${lastName} </p>
-                <p style ="color : red "> Welcome to Amazon </p> 
+                <p style ="color : red "> Welcome to  Amazon </p> 
             <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
                 };
                 sgMail.send(msg)

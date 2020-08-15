@@ -1,16 +1,16 @@
-var i = 0; 			
-var images = ["/img/main-banner.jpg", "/img/banner-image1.jpg"];	
+var i = 0;
+var images = ["/img/main-banner.jpg", "/img/banner-image1.jpg"];
 // Time Between Switch
-var time = 5000;	
+var time = 5000;
 // Image List
 
 
 // Change Image
-function SlideImg(){
+function SlideImg() {
   document.getElementById('slide').src = images[i];
-  if(i < images.length - 1){
-    i++; 
-  } else { 
+  if (i < images.length - 1) {
+    i++;
+  } else {
     // Reset Back To O
     i = 0;
   }
@@ -19,7 +19,7 @@ function SlideImg(){
 }
 
 // Run function when page loads
-window.onload=SlideImg;  
+window.onload = SlideImg;
 
 
 
@@ -28,6 +28,24 @@ window.onload=SlideImg;
 let menu = document.getElementById('menu');
 let sideMenu = document.getElementById('sideMenu');
 
-menu.onclick = ()=>{
+menu.onclick = () => {
   sideMenu.classList.toggle("show-side-menu")
 }
+
+
+
+const quanityForm = document.getElementById("validation")
+
+
+
+quanityForm.addEventListener("submit", (event) => {
+  let value = document.getElementById("productquantity").value
+  console.log(document.getElementById("productquantity").value)
+  if (Number(value) < 1) {
+    
+    alert("Please Enter  a proper quanity")
+    event.preventDefault();
+    return
+  }
+
+})

@@ -4,6 +4,8 @@ const productModel = require('../models/products.js');
 const userModel = require('../models/user');
 const path = require("path");
 const isAuthenticated = require("../middleware/auth");
+const { runInNewContext } = require('vm');
+const { compareSync } = require('bcryptjs');
 
 // This calls the Product Page.
 router.get("/", (req, res) => {
@@ -120,8 +122,9 @@ router.post("/add", (req, res) => {
         .then((product) => {
 
             req.files.image.name = `${product._id}${req.files.image.name}`
-            if ((req.files.image.mimetype) == "image/jpeg" || "image/jpg" || "image/png") {
-                console.log(req.files.image.mimetype)
+            console.log(req.files.image.mimetype)
+            if ((req.files.image.mimetype) == "image/jpeg" || (req.files.image.mimetype) == "image/jpg" || (req.files.image.mimetype) == "image/png") {
+
                 req.files.image.mv(`public/uploads/${req.files.image.name}`)
                     .then(() => {
                         productModel.updateOne({ _id: product._id }, { image: req.files.image.name })
@@ -135,7 +138,7 @@ router.post("/add", (req, res) => {
             }
             else {
                 const error = "Please upload a appropriate file."
-                res.render("product/add", { title: "Product add", error })
+                res.render("product/inventoryClerk", { title: "Product add", error, newProduct })
             }
 
         })
@@ -212,18 +215,22 @@ router.get(`/description/:id`, (req, res) => {
 
 router.get('/cart', isAuthenticated, (req, res) => {
     let amount = 0
+    let error = ""
     const email = req.session.userInfo._id
     userModel.findById(email)
         .then((user) => {
             const productDetail = user.cart
-            console.log(productDetail)
+
             // Promise.all([newProduct]).then((finalProduct)=>console.log(finalProduct))
             let finalProduct = [];
-            console.log(finalProduct)
+
 
             let promiseArr = productDetail.map(eachproduct => {
                 return productModel.findById(eachproduct.product_id)
                     .then((product) => {
+                        if (eachproduct.quantity < 1) {
+                            const error = "This item wont be counted because quanity is zero"
+                        }
                         amount = amount + product.price * eachproduct.quantity
                         const newProduct = {
                             id: product._id,
@@ -231,7 +238,8 @@ router.get('/cart', isAuthenticated, (req, res) => {
                             description: product.description,
                             price: product.price,
                             image: product.image,
-                            quantity: eachproduct.quantity
+                            quantity: eachproduct.quantity,
+                            each_amount: product.price * eachproduct.quantity
 
                         }
                         return (newProduct)
@@ -244,51 +252,76 @@ router.get('/cart', isAuthenticated, (req, res) => {
             })
             Promise.all(promiseArr).then(data => {
                 res.render("product/shopping-cart", {
-                    data: data, amount
+                    data: data, amount, error
                 })
             })
         })
         .catch(err => console.log(err))
-    // console.log(productDetail)
-
-
-
-
-
-    //  if(req.session.userInfo.typeOfUser == "Admin")
-    //  {
-    //     res.render("product/shopping-cart")
-
-    //  }
-    // else{
-    //     res.redirect("/user/login")
-    //   }
+    // console.log(productDetails
 
 })
 
-router.post('/cart', (req, res) => {
-    userModel.updateOne({id:req.session._id})
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-    const msg = {
-        to: `${req.session.userInfo.email}`,
-        from: '97manal@gmail.com',
-        subject: 'Thanks for ordering from Amazon',
-        //   text: 'and easy to do anywhere, even with Node.js',
-        html: `<p style ="font-size : 25px"> Thank you. </p>
+// router.post('/cart', isAuthenticated, (req, res) => {
+//     userModel.updateOne({ _id: req.session._id }, {$set: {cart: [] }})
+//         .then(() => {
+//             const sgMail = require('@sendgrid/mail');
+//             sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+//             const msg = {
+//                 to: `${req.session.userInfo.email}`,
+//                 from: '97manal@gmail.com',
+//                 subject: 'Thanks for ordering from Amazon',
+//                 //   text: 'and easy to do anywhere, even with Node.js',
+//                 html: `<p style ="font-size : 25px"> Thank you for shopping with us of amount </p>
+//     <p style ="color : red "> Please Visit again here for Shopping. </p> 
+// <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
+//             };
+
+//             console.log(msg)
+//             sgMail.send(msg)
+//                 .then(() => {
+//                     res.redirect("/");
+
+//                 })
+//                 .catch(err => {
+//                     console.log(`Error ${err}`);
+//                 });
+//         })
+//         .catch(err => console.log(err))
+
+// })
+router.post('/cart', isAuthenticated, (req, res) => {
+
+    userModel.updateOne({ _id: req.session.userInfo._id }, { $set: { cart: [] } })
+        .then(() => {
+            const sgMail = require('@sendgrid/mail');
+            sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+            const msg = {
+                to: `${req.session.userInfo.email}`,
+                from: '97manal@gmail.com',
+                subject: 'Thanks for ordering from Amazon',
+                //   text: 'and easy to do anywhere, even with Node.js',
+                html: `<p style ="font-size : 25px"> Thank you for shopping with us of amount </p>
     <p style ="color : red "> Please Visit again here for Shopping. </p> 
 <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
-    };
-    sgMail.send(msg)
-        .then(() => {
-            res.redirect("/");
+            };
+            sgMail.send(msg)
+                .then(() => {
+                    res.redirect("/");
+
+                })
+                .catch(err => {
+                    console.log(`Error ${err}`);
+                })
 
         })
-        .catch(err => {
-            console.log(`Error ${err}`);
-        });
+        .catch(err => console.log(err))
 
 })
+
+
+
+
+
 router.post('/description/:id', (req, res) => {
     if (req.session.userInfo) {
         if (req.session.userInfo.typeOfUser == "Admin") {
@@ -296,6 +329,8 @@ router.post('/description/:id', (req, res) => {
         }
         else {
             console.log(req.body.quantity)
+
+
             const newCart = [{ quantity: req.body.quantity, product_id: req.params.id }]
             userModel.updateOne({ email: req.session.userInfo.email }, { $push: { cart: newCart } })
                 .then(() => {
