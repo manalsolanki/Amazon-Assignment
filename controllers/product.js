@@ -115,7 +115,7 @@ router.post("/add", (req, res) => {
         bestSeller: req.body.bestSeller,
     }
 
-
+    if ((req.files.image.mimetype) == "image/jpeg" || (req.files.image.mimetype) == "image/jpg" || (req.files.image.mimetype) == "image/png") {
     const product = new productModel(newProduct)
 
     product.save()
@@ -123,7 +123,7 @@ router.post("/add", (req, res) => {
 
             req.files.image.name = `${product._id}${req.files.image.name}`
             console.log(req.files.image.mimetype)
-            if ((req.files.image.mimetype) == "image/jpeg" || (req.files.image.mimetype) == "image/jpg" || (req.files.image.mimetype) == "image/png") {
+            
 
                 req.files.image.mv(`public/uploads/${req.files.image.name}`)
                     .then(() => {
@@ -135,15 +135,16 @@ router.post("/add", (req, res) => {
 
                     })
                     .catch(err => console.log(err))
-            }
-            else {
-                const error = "Please upload a appropriate file."
-                res.render("product/inventoryClerk", { title: "Product add", error, newProduct })
-            }
+            
+           
 
         })
         .catch(err => console.log(err))
-
+    }
+    else {
+        const error = "Please upload a appropriate file."
+        res.render("product/inventoryClerk", { title: "Product add", error, newProduct })
+    }
 
 })
 
@@ -261,34 +262,7 @@ router.get('/cart', isAuthenticated, (req, res) => {
 
 })
 
-// router.post('/cart', isAuthenticated, (req, res) => {
-//     userModel.updateOne({ _id: req.session._id }, {$set: {cart: [] }})
-//         .then(() => {
-//             const sgMail = require('@sendgrid/mail');
-//             sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-//             const msg = {
-//                 to: `${req.session.userInfo.email}`,
-//                 from: '97manal@gmail.com',
-//                 subject: 'Thanks for ordering from Amazon',
-//                 //   text: 'and easy to do anywhere, even with Node.js',
-//                 html: `<p style ="font-size : 25px"> Thank you for shopping with us of amount </p>
-//     <p style ="color : red "> Please Visit again here for Shopping. </p> 
-// <a href="https://amazon-website-assignment.herokuapp.com/">Click Here to BUY</a> `,
-//             };
 
-//             console.log(msg)
-//             sgMail.send(msg)
-//                 .then(() => {
-//                     res.redirect("/");
-
-//                 })
-//                 .catch(err => {
-//                     console.log(`Error ${err}`);
-//                 });
-//         })
-//         .catch(err => console.log(err))
-
-// })
 router.post('/cart', isAuthenticated, (req, res) => {
 
     userModel.updateOne({ _id: req.session.userInfo._id }, { $set: { cart: [] } })
